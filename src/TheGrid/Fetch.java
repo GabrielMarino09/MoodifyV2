@@ -130,8 +130,10 @@ public class Fetch {
                 final String[] strings = getAvailableGenreSeedsRequest.execute();
                 System.out.println("Length: " + strings.length);
 
-                for(ArtistSimplified artist: SavedTrack[i].getTrack().getArtists()){
+                String ArtistID = null;
+                for (ArtistSimplified artist : SavedTrack[i].getTrack().getArtists()) {
                     System.out.println("Artist: " + artist.getName());
+                    ArtistID = artist.getId();
                 }
 
 
@@ -156,7 +158,24 @@ public class Fetch {
                 System.out.println("Key Confidence: " + audioAnalysis.getTrack().getKeyConfidence());
                 System.out.println();
 
+                final GetRecommendationsRequest getRecommendationsRequest = spotifyApi.getRecommendations()
+                        .limit(1)
+                        .max_popularity(50)
+                        .min_popularity(10)
+                        .seed_artists(ArtistID)
+                        //.seed_genres("electro")
+                        //.seed_tracks("01iyCAUm8EvOFqVWYJ3dVX")
+                        .target_popularity(20)
+                        .build();
+
+                final Recommendations recommendations = getRecommendationsRequest.execute();
+
+                for (TrackSimplified SpotifyRecommendations : recommendations.getTracks()) {
+                    System.out.println("Recommended Track: " + SpotifyRecommendations.getName());
+                    System.out.println("Recommended Track: " + SpotifyRecommendations.getPreviewUrl());
+                }
             }
+
 
             //Gets the total number of playlists, number of saved tracks and artists followed
             System.out.println("-------------------------------------------------------------------------------------");
