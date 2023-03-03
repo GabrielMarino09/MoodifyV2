@@ -1,5 +1,5 @@
 //Nests Authorization code inside authorization.PKCE package
-package authorization.PKCE;
+package authorization.PKCE.PKCE;
 
 //Imports all the necessary libraries from the Spotify API developed by Michael Thelin
 import se.michaelthelin.spotify.SpotifyApi;

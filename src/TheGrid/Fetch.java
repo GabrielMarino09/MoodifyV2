@@ -25,7 +25,7 @@ public class Fetch {
     private static final String userId = "2o6dxgdhlsl9wdmtahmuy3vm6";
 
     //Access token retrieved from the AuthorizationCodeRefresh Class
-    private static final String accessToken = "BQBNKFYbpl-4-XxqtYQ6Yd3o_OvtQ3HHji43oqr70uRq5qpur45MiswRLn9p-RPsuUmG3oY3Naw5H33YzzsMOklTm9SHqW7iOVuA7x9yqO7iouhI2VttjWb14w1Wt2q14ZFNE2lZ4uXaIjcTco55qxbI_3JBwRrCvpR19rDYw3FdTa6lcF54WA0t4Gq8teD8gfQyTpzE2nAmcvFjtw39vUwvNFsGo2Oyp45qFu-f8kDNLzJ1hRo9pFFpoI-hFgzIeNP1WExAovayovXDVamwaFHlO-iFd8fXZG8HcoSLUdmhBmYjDYYlwedgmlGovXHi8mf43flJxB1MECA";
+    private static final String accessToken = "BQBBUqHv3AgcdhQDK2PmZ80qsOCGq5eDE5qIgumx35DG1tfKQj8m5et5ljtROoK_napy8tIKRTd6GOKlXaP3B7CxOnogSM-TGkHv36IeZJxJIBoR0w5f2Q6EJBtXh2NsstN2aPbdr9oVwz4SdA4Kez1wqQkpN3fv-7Wzxn3nod16d_t8BKtT93qxlm3cTTUh0-8uHXNVSFJ5bHwvQTxUQiUZuPBifyI-PEE48iu-nXDe4wXkkzzf-bOLulvueAHAYfursc7MpkN_D99sjhJ8qSxIYNV3WNYE2t8D_r_I662F_noj20K2IIhiNm-q_D34TMEbbd38BTCl_hA";
 
     //Specifies what can be retrieved from Spotify by adding the API request inside a variable
     private static final ModelObjectType Artist = ModelObjectType.ARTIST;
