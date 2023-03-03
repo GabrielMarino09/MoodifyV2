@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="StageOne.SpotifyLoginUI">
+  <grid id="27dc6" binding="SpotifyLoginUI" layout-manager="GridBagLayout">
+    <constraints>
+      <xy x="20" y="20" width="1867" height="1449"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <grid id="65466" binding="LoginUI" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0" ipadx="1500" ipady="900"/>
+        </constraints>
+        <properties>
+          <background color="-1975086"/>
+          <enabled value="true"/>
+          <foreground color="-1975086"/>
+          <visible value="true"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <grid id="25bff" binding="UPPanel" layout-manager="GridBagLayout">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-1975086"/>
+              <foreground color="-1975086"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="782b9" class="javax.swing.JTextField" binding="UsernameTextField">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="-1"/>
+                  </grid>
+                  <gridbag top="0" left="0" bottom="5" right="0" weightx="0.0" weighty="0.0" ipadx="300" ipady="25"/>
+                </constraints>
+                <properties>
+                  <background color="-4674410"/>
+                  <font name="Felix Titling" size="24"/>
+                  <foreground color="-65794"/>
+                  <inheritsPopupMenu value="false"/>
+                </properties>
+              </component>
+              <component id="65843" class="javax.swing.JLabel" binding="UsernameLabel">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <gridbag top="0" left="15" bottom="5" right="0" weightx="0.0" weighty="0.0"/>
+                </constraints>
+                <properties>
+                  <font name="Felix Titling" size="26"/>
+                  <foreground color="-10726849"/>
+                  <labelFor value="ff8a5"/>
+                  <text value="Username:"/>
+                </properties>
+              </component>
+              <component id="108c6" class="javax.swing.JLabel" binding="PasswordLabel">
+                <constraints>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <gridbag top="25" left="15" bottom="5" right="0" weightx="0.0" weighty="0.0"/>
+                </constraints>
+                <properties>
+                  <font name="Felix Titling" size="26"/>
+                  <foreground color="-10726849"/>
+                  <labelFor value="a87de"/>
+                  <text value="Password:"/>
+                </properties>
+              </component>
+              <component id="9cb7d" class="javax.swing.JPasswordField" binding="PasswordField">
+                <constraints>
+                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="-1"/>
+                  </grid>
+                  <gridbag top="0" left="0" bottom="5" right="0" weightx="0.0" weighty="0.0" ipadx="300" ipady="25"/>
+                </constraints>
+                <properties>
+                  <background color="-4674410"/>
+                  <font name="Felix Titling" size="24"/>
+                  <margin top="0" left="0" bottom="0" right="0"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <grid id="6449d" binding="BoxButtonPanel" layout-manager="GridBagLayout">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-1975086"/>
+              <foreground color="-1975086"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="b5324" class="javax.swing.JButton" binding="LogInButton">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                  <gridbag top="60" left="0" bottom="75" right="0" weightx="0.0" weighty="0.0" ipadx="200" ipady="25"/>
+                </constraints>
+                <properties>
+                  <background color="-1975086"/>
+                  <focusPainted value="true"/>
+                  <font name="Felix Titling" size="24"/>
+                  <foreground color="-10726849"/>
+                  <hideActionText value="false"/>
+                  <inheritsPopupMenu value="false"/>
+                  <opaque value="true"/>
+                  <selected value="false"/>
+                  <text value="Log In"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+        </children>
+      </grid>
+      <hspacer id="a771a">
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0"/>
+        </constraints>
+      </hspacer>
+      <vspacer id="9831e">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0"/>
+        </constraints>
+      </vspacer>
+    </children>
+  </grid>
+</form>
