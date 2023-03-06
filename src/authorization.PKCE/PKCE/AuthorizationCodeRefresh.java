@@ -12,7 +12,7 @@ import org.apache.hc.core5.http.ParseException;
 import java.io.IOException;
 
 //Initializes AuthorizationCodeRefresh class
-public class AuthorizationCodeRefresh extends AuthorizationCode{
+public class AuthorizationCodeRefresh {
 
     //Client ID present at the Spotify Developer Dashboard
     private static final String clientId = "01f9b0a52b434813b45b933eb1d9fd1b";
@@ -41,6 +41,7 @@ public class AuthorizationCodeRefresh extends AuthorizationCode{
 
             //Gets new Access Token from Spotify
             spotifyApi.setAccessToken(authorizationCodeCredentials.getAccessToken());
+            String AT = authorizationCodeCredentials.getAccessToken();
 
             System.out.println("Expires in: " + authorizationCodeCredentials.getExpiresIn());
             System.out.println("Expires in: " + authorizationCodeCredentials.getAccessToken());

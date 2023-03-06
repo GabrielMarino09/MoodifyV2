@@ -25,7 +25,7 @@ public class Fetch {
     private static final String userId = "2o6dxgdhlsl9wdmtahmuy3vm6";
 
     //Access token retrieved from the AuthorizationCodeRefresh Class
-    private static final String accessToken = "BQBBUqHv3AgcdhQDK2PmZ80qsOCGq5eDE5qIgumx35DG1tfKQj8m5et5ljtROoK_napy8tIKRTd6GOKlXaP3B7CxOnogSM-TGkHv36IeZJxJIBoR0w5f2Q6EJBtXh2NsstN2aPbdr9oVwz4SdA4Kez1wqQkpN3fv-7Wzxn3nod16d_t8BKtT93qxlm3cTTUh0-8uHXNVSFJ5bHwvQTxUQiUZuPBifyI-PEE48iu-nXDe4wXkkzzf-bOLulvueAHAYfursc7MpkN_D99sjhJ8qSxIYNV3WNYE2t8D_r_I662F_noj20K2IIhiNm-q_D34TMEbbd38BTCl_hA";
+    private static final String accessToken = "BQCWuQpIzOsIyC6RAUAk9xzirVbnyO7Z_LFpp1S56ok-OMsynrubGWzII45i8gcwD6bmsgs_A_Ezp5rPDm3EMEAUUtPFGagwhsRl_9Ju_DC9CmWXzgYslXaAoFcMaGp-jIL11ws-CrvS2cKbznxZjgzji3K4DzBc6zDLIZQckuEitfEWXKOzcZoPGh90kasDkRDG_B0ss27QN6hwVmRKEBgIQAc2jDWPKvMooqCg2CZk3KoVZWLtarIiIQ3VkGC-ny4X3Z1aR06sFKoKT2tlxxeGUtppAbgkHZC7MUqgl3esfKvixcOjFqZcgJJ7b08bKLQok8WKaBOoaQI";
 
     //Specifies what can be retrieved from Spotify by adding the API request inside a variable
     private static final ModelObjectType Artist = ModelObjectType.ARTIST;
@@ -57,6 +57,7 @@ public class Fetch {
             //        .limit(0)
             .offset(0)
             .build();
+
 
 //  private static final GetRecommendationsRequest getRecommendationsRequest = spotifyApi.getRecommendations()
 //          .limit(10)
@@ -127,8 +128,6 @@ public class Fetch {
 
                 final GetAvailableGenreSeedsRequest getAvailableGenreSeedsRequest = spotifyApi.getAvailableGenreSeeds()
                         .build();
-                final String[] strings = getAvailableGenreSeedsRequest.execute();
-                System.out.println("Length: " + strings.length);
 
                 String ArtistID = null;
                 for (ArtistSimplified artist : SavedTrack[i].getTrack().getArtists()) {
@@ -156,23 +155,32 @@ public class Fetch {
                 System.out.println("Track Valence: " + audioFeatures.getValence());
 
                 System.out.println("Key Confidence: " + audioAnalysis.getTrack().getKeyConfidence());
-                System.out.println();
+
+                //System.out.println("Genre: " + getAvailableGenreSeedsRequest;
 
                 final GetRecommendationsRequest getRecommendationsRequest = spotifyApi.getRecommendations()
                         .limit(1)
-                        .max_popularity(50)
+                        .max_popularity(80)
                         .min_popularity(10)
                         .seed_artists(ArtistID)
-                        //.seed_genres("electro")
-                        //.seed_tracks("01iyCAUm8EvOFqVWYJ3dVX")
-                        .target_popularity(20)
+                        //.seed_genres()
+                        //.seed_genres()
+                        .seed_tracks(ID)
+                        .target_popularity(50)
                         .build();
 
                 final Recommendations recommendations = getRecommendationsRequest.execute();
 
                 for (TrackSimplified SpotifyRecommendations : recommendations.getTracks()) {
+                    System.out.println("-------------------------------------------------------------------------------------");
+                    System.out.println("Recommendations:");
                     System.out.println("Recommended Track: " + SpotifyRecommendations.getName());
-                    System.out.println("Recommended Track: " + SpotifyRecommendations.getPreviewUrl());
+                    for (ArtistSimplified artist : SpotifyRecommendations.getArtists()) {
+                        System.out.println("Artist: " + artist.getName());
+                    }
+                    System.out.println("Preview URL: " + SpotifyRecommendations.getPreviewUrl());
+                    System.out.println("-------------------------------------------------------------------------------------");
+                    System.out.println();
                 }
             }
 
