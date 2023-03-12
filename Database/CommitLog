@@ -1,0 +1,12 @@
+Update List:
+
+- Seamless retrieval for Access Token (sketched, not currently working).
+
+- Database Connection (Working)
+
+- Database Writing (Working)
+
+Change Log:
+
+- Fetch class has a few modifications due to the connection and adding of the database. Arraylists were used to add to the database
+

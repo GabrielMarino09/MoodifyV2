@@ -3,6 +3,9 @@ package TheGrid;
 
 //Imports all the necessary libraries from the Spotify API developed by Michael Thelin
 
+import authorization.PKCE.PKCE.AuthorizationCodeRefresh;
+import java.sql.*;
+import javax.swing.*;
 import org.apache.hc.core5.http.ParseException;
 import se.michaelthelin.spotify.SpotifyApi;
 import se.michaelthelin.spotify.enums.ModelObjectType;
@@ -17,15 +20,38 @@ import se.michaelthelin.spotify.requests.data.playlists.GetListOfUsersPlaylistsR
 import se.michaelthelin.spotify.requests.data.tracks.GetAudioAnalysisForTrackRequest;
 import se.michaelthelin.spotify.requests.data.tracks.GetAudioFeaturesForTrackRequest;
 
+
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Fetch {
+
+    Connection conn=null;
+    public static Connection dbConnector()
+    {
+        try {
+            Class.forName("org.sqlite.JDBC");
+            Connection conn=DriverManager.getConnection("jdbc:sqlite:Database/Moodify.db");
+            JOptionPane.showMessageDialog(null,"Connection is successful to database!");
+            return conn;
+
+        }catch(Exception e) {
+            JOptionPane.showMessageDialog(null,e);
+            return null;
+        }
+    }
 
     //UserID present at the User's profile page
     private static final String userId = "2o6dxgdhlsl9wdmtahmuy3vm6";
 
-    //Access token retrieved from the AuthorizationCodeRefresh Class
-    private static final String accessToken = "BQCWuQpIzOsIyC6RAUAk9xzirVbnyO7Z_LFpp1S56ok-OMsynrubGWzII45i8gcwD6bmsgs_A_Ezp5rPDm3EMEAUUtPFGagwhsRl_9Ju_DC9CmWXzgYslXaAoFcMaGp-jIL11ws-CrvS2cKbznxZjgzji3K4DzBc6zDLIZQckuEitfEWXKOzcZoPGh90kasDkRDG_B0ss27QN6hwVmRKEBgIQAc2jDWPKvMooqCg2CZk3KoVZWLtarIiIQ3VkGC-ny4X3Z1aR06sFKoKT2tlxxeGUtppAbgkHZC7MUqgl3esfKvixcOjFqZcgJJ7b08bKLQok8WKaBOoaQI";
+    /*
+    Access token retrieved from the AuthorizationCodeRefresh Class
+    Failed Attempt to implement seamless fetching
+    AuthorizationCodeRefresh ATR = new AuthorizationCodeRefresh();
+    String FinalAT = ATR.ATFinal;
+    */
+
+    private static final String accessToken = "BQBe1eByw7UCROGI_rm3SvVUk-TfnM_vVO-KUNz2JCSRPAFKBEyc9XYUckoVRBhTctEHRg7I2TSFFiGNfgoz7BTo-F59QnG8cZ7bEwyAgpj4oyn_bFfiC7L0w_oJDlHixzaFeXSfMah1Ak8u0OOBntjVke_ymwzzsPrvLf-lz33LVpHeJQQGCEpGmmo6qZeZ7pmMw4-Xy-cQjgbyVBTcqy3pC-ZMll1AMqsVuwN4WgpIJdhY612hdyK5auL3aWr_vRxlZrdgTRTptoRwdD5vfVcvAL93fS4OxGshFAe3qPndc0CingAEzm3ND6vX5LhvbMuch0FW2c8SxBY";
 
     //Specifies what can be retrieved from Spotify by adding the API request inside a variable
     private static final ModelObjectType Artist = ModelObjectType.ARTIST;
@@ -106,6 +132,9 @@ public class Fetch {
 
             }
 
+            Class.forName("org.sqlite.JDBC");
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:Database/Moodify.db");
+            String query = "insert into TrackInfo (TrackName,Artist,Explicit,TrackID,RecommendedTrack,RecommendedArtist,RecommendedURL) values(?,?,?,?,?,?,?)";
             //Gets the information regarding the users saved tracks and their details
             System.out.println("-------------------------------------------------------------------------------------");
             final Paging<SavedTrack> savedTrackPaging = getUsersSavedTracksRequest.execute();
@@ -113,9 +142,15 @@ public class Fetch {
             System.out.println("Tracks Found: " + SavedTrack.length);
             System.out.println("-------------------------------------------------------------------------------------");
             for (int i = 0; i < SavedTrack.length; i++) {
+                //------------------------------------------------------------------------------------------------------
+                PreparedStatement pst = connection.prepareStatement(query);
                 System.out.println("Track Name: " + SavedTrack[i].getTrack().getName());
+                pst.setString(1, SavedTrack[i].getTrack().getName());
+                //------------------------------------------------------------------------------------------------------
                 System.out.println("Track ID: " + SavedTrack[i].getTrack().getId());
                 String ID = SavedTrack[i].getTrack().getId();
+                pst.setString(4, ID);
+                //------------------------------------------------------------------------------------------------------
                 GetAudioFeaturesForTrackRequest getAudioFeaturesForTrackRequest = spotifyApi
                         .getAudioFeaturesForTrack(ID)
                         .build();
@@ -130,16 +165,28 @@ public class Fetch {
                         .build();
 
                 String ArtistID = null;
+                ArrayList<String> Artists = new ArrayList<String>();
+                Artists.clear();
+
                 for (ArtistSimplified artist : SavedTrack[i].getTrack().getArtists()) {
                     System.out.println("Artist: " + artist.getName());
                     ArtistID = artist.getId();
+                    Artists.add(artist.getName());
+
+
+                    //------------------------------------------------------------------------------------------------------
+                    pst.setString(2, String.valueOf(Artists).replace("[","").replace("]","").replace(",",", "));
+                    //------------------------------------------------------------------------------------------------------
                 }
 
 
                 System.out.println("Duration (Milliseconds): " + SavedTrack[i].getTrack().getDurationMs());
                 System.out.println("-------------------------------------------------------------------------------------");
                 System.out.println("Track Analysis");
+
                 System.out.println("Explicit: " + SavedTrack[i].getTrack().getIsExplicit());
+                pst.setString(3, String.valueOf(SavedTrack[i].getTrack().getIsExplicit()));
+
                 System.out.println("Popularity: " + SavedTrack[i].getTrack().getPopularity());
 
                 System.out.println("Track Energy: " + audioFeatures.getEnergy());
@@ -174,13 +221,29 @@ public class Fetch {
                 for (TrackSimplified SpotifyRecommendations : recommendations.getTracks()) {
                     System.out.println("-------------------------------------------------------------------------------------");
                     System.out.println("Recommendations:");
+                    //------------------------------------------------------------------------------------------------------
                     System.out.println("Recommended Track: " + SpotifyRecommendations.getName());
+                    pst.setString(5, SpotifyRecommendations.getName());
+                    //------------------------------------------------------------------------------------------------------
+                    ArrayList<String> RecArt = new ArrayList<String>();
+                    RecArt.clear();
                     for (ArtistSimplified artist : SpotifyRecommendations.getArtists()) {
                         System.out.println("Artist: " + artist.getName());
+                        RecArt.add(artist.getName());
                     }
+                    pst.setString(6, String.valueOf(RecArt).replace("[","").replace("]","").replace(",",", "));
+                    //------------------------------------------------------------------------------------------------------
                     System.out.println("Preview URL: " + SpotifyRecommendations.getPreviewUrl());
+                    if (SpotifyRecommendations.getPreviewUrl() == null){
+                        pst.setString(7, "Preview not available to region of Spotify account.");
+                    }
+                    else{
+                        pst.setString(7, SpotifyRecommendations.getPreviewUrl());
+                    }
+
                     System.out.println("-------------------------------------------------------------------------------------");
                     System.out.println();
+                    pst.execute();
                 }
             }
 
@@ -193,12 +256,18 @@ public class Fetch {
 
 
 
+
         } catch (IOException | SpotifyWebApiException | ParseException e) {
             System.out.println("Error: " + e.getMessage());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
     public static void main(String[] args) {
+        dbConnector();
         Fetch();
     }
 }

@@ -15,6 +15,7 @@ import java.io.IOException;
 public class AuthorizationCodeRefresh {
 
     //Client ID present at the Spotify Developer Dashboard
+
     private static final String clientId = "01f9b0a52b434813b45b933eb1d9fd1b";
 
     //Client Secret present at the Spotify Developer Dashboard
@@ -33,6 +34,7 @@ public class AuthorizationCodeRefresh {
     //Sets the request for the authorisation code refresh to be generated
     private static final AuthorizationCodeRefreshRequest authorizationCodeRefreshRequest = spotifyApi.authorizationCodeRefresh()
             .build();
+    public static String ATFinal;
 
     //Retrieves the authorization code refresh from Spotify
     public static void authorizationCodeRefresh_Sync() {
@@ -41,18 +43,19 @@ public class AuthorizationCodeRefresh {
 
             //Gets new Access Token from Spotify
             spotifyApi.setAccessToken(authorizationCodeCredentials.getAccessToken());
-            String AT = authorizationCodeCredentials.getAccessToken();
-
             System.out.println("Expires in: " + authorizationCodeCredentials.getExpiresIn());
             System.out.println("Expires in: " + authorizationCodeCredentials.getAccessToken());
+            String ATDemo = authorizationCodeCredentials.getAccessToken();
+            ATFinal = ATDemo;
+            System.out.println("ATDemo: " + ATFinal);
         } catch (IOException | SpotifyWebApiException | ParseException e) {
             System.out.println("Error: " + e.getMessage());
         }
+
     }
 
     //Executes what was previously set to happen
     public static void main(String[] args) {
         authorizationCodeRefresh_Sync();
-
-    }
+            }
 }
