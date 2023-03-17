@@ -30,7 +30,6 @@ import java.util.ArrayList;
 
 public class Fetch {
 
-    Connection conn=null;
     public static Connection dbConnector()
     {
         try {
@@ -45,6 +44,48 @@ public class Fetch {
         }
     }
 
+    private static ArrayList<String[]> getData(){
+        ArrayList<String[]> table = new ArrayList<>();
+        Connection conn = null;
+        String query = "SELECT * from TrackInfo";
+        String deleteQuery = "DELETE FROM TrackInfo";
+        String VAC = "VACUUM";
+        /* Maybe...
+        String StartQuery = "CREATE TABLE TrackInfo (" +
+                "TrackName TEXT," +
+                "Artist TEXT," +
+                "Explicit TEXT," +
+                "TrackID TEXT," +
+                "RecommendedTrack TEXT," +
+                "RecommendedArtist TEXT," +
+                "RecommendedURL TEXT," +
+                "Mood TEXT)";
+         */
+        try{
+            conn = dbConnector();
+            Statement stmt = conn.createStatement();
+            stmt.executeQuery(deleteQuery);
+            stmt.executeQuery(VAC);
+            //stmt.executeQuery(StartQuery);
+
+        } catch (SQLException sqle){
+            sqle.printStackTrace();
+        }
+        finally {
+            closeConnection(conn);
+        }
+        return table;
+    }
+
+    public static void closeConnection(Connection conn){
+        try{
+            conn.close();
+
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
     //UserID present at the User's profile page
     private static final String userId = "2o6dxgdhlsl9wdmtahmuy3vm6";
 
@@ -52,7 +93,8 @@ public class Fetch {
     Access token retrieved from the AuthorizationCodeRefresh Class
     Failed Attempt to implement seamless fetching
     */
-    private static final String accessToken = "BQC0b9ywzKxY1-CFyTaH0toG57ak66Q5bqc3_n5Lc3Em4eVoZlpqB-c-RPsmqsz9EtHiGP5eQm2TVj92a3itvQhF_K5lhcPOxO2MTCn2xNdlGnTlooP414X-X94-OD-KjzrYNo9gPKckwZOSb1RDF5azBWjiLQZSsc0QxUgBvw91z7JqMAjAbbcIU6LStwrTephTYbAsXPa4GCPTFTIOKjbSrn5C6jvJXx3RlCjf4cdbxGFCTdyJ4VE7uXXKSgPEa_VNtV1MZ20zA6aZQoJWURHsdyIl2Swp0N919paVanDrI_pRnQhMYStf_KGrZit5eTEB1U2qixEJw18";
+    // private static final String accessToken = "BQC0b9ywzKxY1-CFyTaH0toG57ak66Q5bqc3_n5Lc3Em4eVoZlpqB-c-RPsmqsz9EtHiGP5eQm2TVj92a3itvQhF_K5lhcPOxO2MTCn2xNdlGnTlooP414X-X94-OD-KjzrYNo9gPKckwZOSb1RDF5azBWjiLQZSsc0QxUgBvw91z7JqMAjAbbcIU6LStwrTephTYbAsXPa4GCPTFTIOKjbSrn5C6jvJXx3RlCjf4cdbxGFCTdyJ4VE7uXXKSgPEa_VNtV1MZ20zA6aZQoJWURHsdyIl2Swp0N919paVanDrI_pRnQhMYStf_KGrZit5eTEB1U2qixEJw18";
+    private static final String accessToken = AuthorizationCodeRefresh.authorizationCodeRefresh_Sync();
 
     //Specifies what can be retrieved from Spotify by adding the API request inside a variable
     private static final ModelObjectType Artist = ModelObjectType.ARTIST;
@@ -100,6 +142,7 @@ public class Fetch {
 
     //Initializes Fetch class
     public static void Fetch() {
+
         try {
             //Gets the information regarding the users playlists (both public and private)
             System.out.println("-------------------------------------------------------------------------------------");
@@ -135,7 +178,9 @@ public class Fetch {
 
             Class.forName("org.sqlite.JDBC");
             Connection connection = DriverManager.getConnection("jdbc:sqlite:Database/Moodify.db");
-            String query = "insert into TrackInfo (TrackName,Artist,Explicit,TrackID,RecommendedTrack,RecommendedArtist,RecommendedURL, Mood) values(?,?,?,?,?,?,?,?)";
+            String query = "insert into TrackInfo (TrackName,Artist,Explicit,TrackID,RecommendedTrack,RecommendedArtist,RecommendedURL, Mood, Album, MainArtist) values(?,?,?,?,?,?,?,?,?,?)";
+            PreparedStatement pst = connection.prepareStatement(query);
+
             //Gets the information regarding the users saved tracks and their details
             System.out.println("-------------------------------------------------------------------------------------");
             final Paging<SavedTrack> savedTrackPaging = getUsersSavedTracksRequest.execute();
@@ -144,7 +189,6 @@ public class Fetch {
             System.out.println("-------------------------------------------------------------------------------------");
             for (int i = 0; i < SavedTrack.length; i++) {
                 //------------------------------------------------------------------------------------------------------
-                PreparedStatement pst = connection.prepareStatement(query);
                 System.out.println("Track Name: " + SavedTrack[i].getTrack().getName());
                 pst.setString(1, SavedTrack[i].getTrack().getName());
                 //------------------------------------------------------------------------------------------------------
@@ -169,6 +213,10 @@ public class Fetch {
                 ArrayList<String> Artists = new ArrayList<String>();
                 Artists.clear();
 
+                for (ArtistSimplified artist : SavedTrack[i].getTrack().getArtists()){
+                    pst.setString(10, artist.getName());
+                }
+
                 for (ArtistSimplified artist : SavedTrack[i].getTrack().getArtists()) {
                     System.out.println("Artist: " + artist.getName());
                     ArtistID = artist.getId();
@@ -182,11 +230,18 @@ public class Fetch {
 
 
                 System.out.println("Duration (Milliseconds): " + SavedTrack[i].getTrack().getDurationMs());
+                System.out.println("Album: " + SavedTrack[i].getTrack().getAlbum().getName());
+                pst.setString(9, SavedTrack[i].getTrack().getAlbum().getName());
                 System.out.println("-------------------------------------------------------------------------------------");
                 System.out.println("Track Analysis");
 
                 System.out.println("Explicit: " + SavedTrack[i].getTrack().getIsExplicit());
-                pst.setString(3, String.valueOf(SavedTrack[i].getTrack().getIsExplicit()));
+                if (SavedTrack[i].getTrack().getIsExplicit().toString().equals("true")){
+                    pst.setString(3, "Explicit");
+                }
+                else{
+                    pst.setString(3, "Not Explicit");
+                }
 
                 System.out.println("Popularity: " + SavedTrack[i].getTrack().getPopularity());
 
@@ -306,8 +361,6 @@ public class Fetch {
             System.out.println("Number of Artists Followed: " + artistPagingCursorbased.getTotal());
 
 
-
-
         } catch (IOException | SpotifyWebApiException | ParseException e) {
             System.out.println("Error: " + e.getMessage());
         } catch (SQLException e) {
@@ -318,6 +371,7 @@ public class Fetch {
     }
 
     public static void main(String[] args) {
+        getData();
         dbConnector();
         Fetch();
     }

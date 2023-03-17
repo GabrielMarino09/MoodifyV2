@@ -36,18 +36,21 @@ public class AuthorizationCodeRefresh {
     public static String ATFinal;
 
     //Retrieves the authorization code refresh from Spotify
-    public static void authorizationCodeRefresh_Sync() {
+    public static String authorizationCodeRefresh_Sync() {
+        String token = "";
         try {
             final AuthorizationCodeCredentials authorizationCodeCredentials = authorizationCodeRefreshRequest.execute();
 
             //Gets new Access Token from Spotify
             spotifyApi.setAccessToken(authorizationCodeCredentials.getAccessToken());
             System.out.println("Expires in: " + authorizationCodeCredentials.getExpiresIn());
-            System.out.println("Expires in: " + authorizationCodeCredentials.getAccessToken());
+            token = authorizationCodeCredentials.getAccessToken();
+            System.out.println("Token: " + token);
+
         } catch (IOException | SpotifyWebApiException | ParseException e) {
             System.out.println("Error: " + e.getMessage());
         }
-
+        return token;
     }
 
     //Executes what was previously set to happen
