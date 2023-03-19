@@ -38,7 +38,7 @@ import java.util.concurrent.CompletionException;
 import java.io.IOException;
 
 public class MockClass {
-    private static final String userId = "gwq66wps2n6f7ed2mw0rsk7v3";
+    private static final String userId = "2o6dxgdhlsl9wdmtahmuy3vm6";
 
     /*
     Access token retrieved from the AuthorizationCodeRefresh Class

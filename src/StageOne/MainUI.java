@@ -1,3 +1,4 @@
+
 package StageOne;
 
 import authorization.PKCE.PKCE.AuthorizationCodeRefresh;
@@ -145,7 +146,6 @@ public class MainUI {
             public void actionPerformed(ActionEvent e) {
                 try {
                     final Device[] devices = getUsersAvailableDevicesRequest.execute();
-
                     String DID = "";
                     System.out.println("Length: " + devices.length);
                     if (devices.length == 1) {
@@ -940,4 +940,3 @@ public class MainUI {
         // TODO: place custom component creation code here
     }
 }
-

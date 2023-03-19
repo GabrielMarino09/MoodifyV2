@@ -21,7 +21,7 @@ public class AuthorizationCodeRefresh {
     private static final String clientSecret = "a69d39607db842f788821dbb92e88c27";
 
     //Refresh Token collected at the Authorization Code Class
-    private static final String refreshToken = "AQAluW7CDR3tWmQbbhyMGY7XdES3PQDOKuNFC3eOKqgoC8cskijk5-ckEVL7RYetz-9jICkiyuwprG9HFa81ZLn935i7wP5q3hh6q4yXURSw8nevICGkax6iaLHZqYAajDA";
+    private static final String refreshToken = "AQAipPyS7AWda_iYpJyKWPxn0N321gWgqCMPLRmXPRj2D9u_L_LG1zfEwXyKCOQtrWBSh6tf5b5c6aTSvIzPOzVDicXsl8QRYwBBViA0_j_PGBYCo76gqPtom9htH5XMqHk";
 
     //Sets all the information that will be used by Spotify to generate a token
     private static final SpotifyApi spotifyApi = new SpotifyApi.Builder()

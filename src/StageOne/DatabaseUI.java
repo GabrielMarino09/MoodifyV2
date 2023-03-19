@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
@@ -29,32 +30,30 @@ public class DatabaseUI {
     private JScrollPane sp;
 
 
-
-    public Connection dbConnector()
-    {
+    public Connection dbConnector() {
         try {
             Class.forName("org.sqlite.JDBC");
-            Connection conn=DriverManager.getConnection("jdbc:sqlite:Database/Moodify.db");
-            JOptionPane.showMessageDialog(null,"Connection is successful to database!");
+            Connection conn = DriverManager.getConnection("jdbc:sqlite:Database/Moodify.db");
+            JOptionPane.showMessageDialog(null, "Connection is successful to database!");
             return conn;
 
-        }catch(Exception e) {
-            JOptionPane.showMessageDialog(null,e);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
             return null;
         }
     }
 
-    private String[][] getData(){
+    private String[][] getData() {
         ArrayList<String[]> table = new ArrayList<>();
         Connection conn = null;
         String query = "SELECT * from TrackInfo";
         int NUM_COLS = 4;
-        try{
+        try {
             conn = dbConnector();
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             int a = 0;
-            while(rs.next()){
+            while (rs.next()) {
 
                 System.out.print(a++);
                 System.out.println(" " + rs.getString(1));
@@ -65,7 +64,7 @@ public class DatabaseUI {
                 dataRow[3] = rs.getString(8);
                 table.add(dataRow);
             }
-            for(String[] mydata:  table){
+            for (String[] mydata : table) {
                 System.out.println("--");
                 System.out.print(mydata[0]);
                 System.out.print(" | " + mydata[1]);
@@ -75,33 +74,32 @@ public class DatabaseUI {
             }
 
             String[][] fullTable = new String[table.size()][NUM_COLS];
-            for(int i = 0; i < table.size(); i++){
+            for (int i = 0; i < table.size(); i++) {
                 fullTable[i] = table.get(i);
             }
 
 
             return fullTable;
 
-        } catch (SQLException sqle){
+        } catch (SQLException sqle) {
             sqle.printStackTrace();
-        }
-        finally {
+        } finally {
             closeConnection(conn);
         }
         return getData();
     }
 
-    public void closeConnection(Connection conn){
-        try{
+    public void closeConnection(Connection conn) {
+        try {
             conn.close();
 
-        } catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
 
-    private void createTable(JFrame frame){
+    private void createTable(JFrame frame) {
 
         // adding it to JScrollPane
         sp = new JScrollPane(Table01);
@@ -115,27 +113,26 @@ public class DatabaseUI {
 
 
     public static void main(String[] args) {
-        DatabaseUI ui = new DatabaseUI();
         JFrame frame = new JFrame("Moodify");
+        DatabaseUI ui = new DatabaseUI();
         Image image = getImage();
         frame.setIconImage(image);
         frame.setContentPane(ui.DatabaseUIPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        frame.setVisible(true);
-
     }
 
     public DatabaseUI() {
-
-
         BackButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
             }
         });
     }
+
+
+
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
