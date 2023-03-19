@@ -112,6 +112,8 @@ public class DatabaseUI {
         //DatabaseUIPanel.setVisible(true);
     }
 
+
+
     public static void main(String[] args) {
         DatabaseUI ui = new DatabaseUI();
         JFrame frame = new JFrame("Moodify");
@@ -122,14 +124,15 @@ public class DatabaseUI {
         frame.pack();
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setVisible(true);
+
     }
 
     public DatabaseUI() {
 
+
         BackButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //add modal action.
             }
         });
     }
