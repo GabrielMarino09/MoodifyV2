@@ -2,27 +2,32 @@
 package StageOne;
 
 import authorization.PKCE.PKCE.AuthorizationCodeRefresh;
+
 import org.apache.hc.core5.http.ParseException;
 import se.michaelthelin.spotify.SpotifyApi;
 import se.michaelthelin.spotify.enums.ModelObjectType;
 import se.michaelthelin.spotify.exceptions.SpotifyWebApiException;
+import se.michaelthelin.spotify.model_objects.miscellaneous.CurrentlyPlayingContext;
 import se.michaelthelin.spotify.model_objects.miscellaneous.Device;
-import se.michaelthelin.spotify.model_objects.specification.Paging;
-import se.michaelthelin.spotify.model_objects.specification.Recommendations;
-import se.michaelthelin.spotify.model_objects.specification.TrackSimplified;
+import se.michaelthelin.spotify.model_objects.specification.*;
 import se.michaelthelin.spotify.requests.data.browse.GetRecommendationsRequest;
 import se.michaelthelin.spotify.requests.data.follow.GetUsersFollowedArtistsRequest;
 import se.michaelthelin.spotify.requests.data.library.GetUsersSavedTracksRequest;
 import se.michaelthelin.spotify.requests.data.personalization.simplified.GetUsersTopTracksRequest;
 import se.michaelthelin.spotify.requests.data.player.AddItemToUsersPlaybackQueueRequest;
+import se.michaelthelin.spotify.requests.data.player.GetInformationAboutUsersCurrentPlaybackRequest;
 import se.michaelthelin.spotify.requests.data.player.GetUsersAvailableDevicesRequest;
 import se.michaelthelin.spotify.requests.data.player.SkipUsersPlaybackToNextTrackRequest;
 import se.michaelthelin.spotify.requests.data.playlists.GetListOfUsersPlaylistsRequest;
+import se.michaelthelin.spotify.requests.data.tracks.GetTrackRequest;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -59,6 +64,15 @@ public class MainUI {
     private JLabel DayLabel;
     private JLabel DateLabel;
     private JLabel TimeLabel;
+    private JLabel VideoLabel;
+    private JLabel ImageLBL;
+    private JLabel CSongNameLBL;
+    private JLabel CAlbumNameLBL;
+    private JLabel CArtistNameLBL;
+    private JPanel CPPanel;
+    private JButton GoBack;
+    private JButton Pause;
+    private JButton FastForward;
     private static final String userId = "2o6dxgdhlsl9wdmtahmuy3vm6";
     //private static final String userId = "gwq66wps2n6f7ed2mw0rsk7v3";
 
@@ -109,8 +123,15 @@ public class MainUI {
             .getUsersAvailableDevices()
             .build();
 
-    public MainUI() {
+    private static final GetInformationAboutUsersCurrentPlaybackRequest getInformationAboutUsersCurrentPlaybackRequest =
+            spotifyApi.getInformationAboutUsersCurrentPlayback()
+//                  .market(CountryCode.SE)
+//                  .additionalTypes("track,episode")
+                    .build();
 
+
+    public MainUI() {
+        ImageIcon Lake = new ImageIcon("/Users/gabriel/IdeaProjects/MoodifyV2/src/Images/Lake.gif");
 
         Option1Button.addActionListener(new ActionListener() {
             @Override
@@ -144,6 +165,8 @@ public class MainUI {
         HappyButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                VideoLabel.setIcon(Lake);
+                VideoLabel.setVisible(true);
                 try {
                     final Device[] devices = getUsersAvailableDevicesRequest.execute();
                     String DID = "";
@@ -228,6 +251,9 @@ public class MainUI {
         ExcitedButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                ImageIcon img = new ImageIcon("/Users/gabriel/IdeaProjects/MoodifyV2/src/Images/SnowPark.gif");
+                VideoLabel.setIcon(img);
+                VideoLabel.setVisible(true);
                 try {
                     final Device[] devices = getUsersAvailableDevicesRequest.execute();
 
@@ -827,6 +853,8 @@ public class MainUI {
         AnnoyedButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                VideoLabel.setIcon(Lake);
+                VideoLabel.setVisible(true);
                 try {
                     final Device[] devices = getUsersAvailableDevicesRequest.execute();
 
@@ -904,14 +932,43 @@ public class MainUI {
                             .build();
                     skipUsersPlaybackToNextTrackRequest.execute();
 
-                } catch (IOException | SpotifyWebApiException | ParseException p) {
+                    Thread.sleep(5000);
+                    final CurrentlyPlayingContext currentlyPlayingContext = getInformationAboutUsersCurrentPlaybackRequest.execute();
+                    final String NPID = currentlyPlayingContext.getItem().getId();
+                    final String id = NPID;
+                    final GetTrackRequest getTrackRequest = spotifyApi.getTrack(id)
+//                          .market(CountryCode.SE)
+                            .build();
+                    final Track track = getTrackRequest.execute();
+
+                    System.out.println("Track Name: " + track.getName());
+                    CSongNameLBL.setText(track.getName());
+                    System.out.println("Album: " + track.getAlbum().getName());
+                    CAlbumNameLBL.setText(track.getAlbum().getName());
+                    for (ArtistSimplified artist : track.getArtists()){
+                        System.out.println("Artist: " + artist.getName());
+                        artist.getName();
+                        CArtistNameLBL.setText(artist.getName());
+                        break;
+                    }
+                    System.out.println("Artist: " + track.getArtists());
+                    System.out.println("Image: " + track.getAlbum().getImages());
+
+                    se.michaelthelin.spotify.model_objects.specification.Image[] IURL = track.getAlbum().getImages();
+                    String ImageURLBIG = String.valueOf(IURL[0].getUrl());
+                    System.out.println("Image: " + ImageURLBIG);
+                    URL getImageUrl = new URL(ImageURLBIG);
+                    BufferedImage ImageBuffer = ImageIO.read(getImageUrl);
+                    Image ResizedAlbumCover = ImageBuffer.getScaledInstance(200,200, Image.SCALE_SMOOTH);
+                    ImageIcon IA = new ImageIcon(ResizedAlbumCover);
+                    ImageLBL.setIcon(IA);
+
+
+                } catch (IOException | SpotifyWebApiException | ParseException | InterruptedException p) {
                     throw new RuntimeException(p);
                 }
             }
         });
-
-
-
     }
 
 

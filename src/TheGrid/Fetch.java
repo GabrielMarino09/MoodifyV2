@@ -172,7 +172,8 @@ public class Fetch {
                 System.out.println("-------------------------------------------------------------------------------------");
                 System.out.println("Recommendations:");
                 System.out.println("To Be Tested");
-                System.out.println();System.out.println();
+                System.out.println();
+                System.out.println();
 
             }
 

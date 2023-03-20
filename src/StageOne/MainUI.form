@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="MainUI" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="1755" height="1057"/>
+      <xy x="20" y="20" width="2495" height="1497"/>
     </constraints>
     <properties>
       <background color="-1975086"/>
@@ -337,7 +337,11 @@
       </grid>
       <grid id="74f17" binding="PlaybackPanel" layout-manager="GridBagLayout">
         <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <minimum-size width="900" height="700"/>
+            <preferred-size width="900" height="700"/>
+            <maximum-size width="900" height="700"/>
+          </grid>
         </constraints>
         <properties>
           <background color="-1975086"/>
@@ -345,30 +349,141 @@
         </properties>
         <border type="none"/>
         <children>
-          <grid id="b3164" binding="VideoPanel" layout-manager="GridBagLayout">
-            <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag top="0" left="5" bottom="60" right="25" weightx="0.0" weighty="0.0" ipadx="900" ipady="450"/>
-            </constraints>
-            <properties>
-              <background color="-4674410"/>
-              <foreground color="-4674410"/>
-            </properties>
-            <border type="none"/>
-            <children/>
-          </grid>
           <grid id="6fc00" binding="PreviewPlane" layout-manager="GridBagLayout">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag top="0" left="5" bottom="30" right="25" weightx="0.0" weighty="0.0" ipadx="900" ipady="250"/>
+              <gridbag top="0" left="0" bottom="100" right="0" weightx="0.0" weighty="0.0" ipadx="150" ipady="100"/>
             </constraints>
             <properties>
               <background color="-4674410"/>
+              <enabled value="true"/>
               <foreground color="-4674410"/>
+              <inheritsPopupMenu value="true"/>
             </properties>
             <border type="none"/>
-            <children/>
+            <children>
+              <component id="96a96" class="javax.swing.JLabel" binding="ImageLBL">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <gridbag top="0" left="0" bottom="0" right="70" weightx="0.0" weighty="0.0"/>
+                </constraints>
+                <properties>
+                  <icon value="Images/DemoCover.gif"/>
+                  <text value=""/>
+                </properties>
+              </component>
+              <grid id="89376" binding="CPPanel" layout-manager="GridLayoutManager" row-count="4" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0" ipadx="300"/>
+                </constraints>
+                <properties>
+                  <background color="-4674410"/>
+                  <enabled value="true"/>
+                  <foreground color="-4674410"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <component id="ea733" class="javax.swing.JLabel" binding="CSongNameLBL">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <background color="-4674410"/>
+                      <font name="Felix Titling" size="20" style="0"/>
+                      <foreground color="-10726849"/>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                  <component id="b448f" class="javax.swing.JLabel" binding="CAlbumNameLBL">
+                    <constraints>
+                      <grid row="2" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <background color="-4674410"/>
+                      <font name="Felix Titling" size="20" style="0"/>
+                      <foreground color="-10726849"/>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                  <component id="c21d1" class="javax.swing.JLabel" binding="CArtistNameLBL">
+                    <constraints>
+                      <grid row="1" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <background color="-4674410"/>
+                      <font name="Felix Titling" size="20" style="0"/>
+                      <foreground color="-10726849"/>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                  <component id="d8e06" class="javax.swing.JButton" binding="GoBack">
+                    <constraints>
+                      <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
+                        <minimum-size width="40" height="40"/>
+                        <preferred-size width="40" height="40"/>
+                        <maximum-size width="40" height="40"/>
+                      </grid>
+                    </constraints>
+                    <properties>
+                      <background color="-4674410"/>
+                      <borderPainted value="false"/>
+                      <contentAreaFilled value="false"/>
+                      <foreground color="-4674410"/>
+                      <icon value="Images/GB.png"/>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                  <component id="90415" class="javax.swing.JButton" binding="Pause">
+                    <constraints>
+                      <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
+                        <minimum-size width="40" height="40"/>
+                        <preferred-size width="40" height="40"/>
+                        <maximum-size width="40" height="40"/>
+                      </grid>
+                    </constraints>
+                    <properties>
+                      <background color="-4674410"/>
+                      <borderPainted value="false"/>
+                      <contentAreaFilled value="false"/>
+                      <foreground color="-4674410"/>
+                      <icon value="Images/PlayPause.png"/>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                  <component id="cfb55" class="javax.swing.JButton" binding="FastForward">
+                    <constraints>
+                      <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
+                        <minimum-size width="40" height="40"/>
+                        <preferred-size width="40" height="40"/>
+                        <maximum-size width="40" height="40"/>
+                      </grid>
+                    </constraints>
+                    <properties>
+                      <background color="-4674410"/>
+                      <borderPainted value="false"/>
+                      <contentAreaFilled value="false"/>
+                      <foreground color="-4674410"/>
+                      <icon value="Images/FF.png"/>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+            </children>
           </grid>
+          <component id="bdb81" class="javax.swing.JLabel" binding="VideoLabel">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag top="0" left="0" bottom="50" right="0" weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <foreground color="-10726849"/>
+              <icon value="Images/LightModeBlank.gif"/>
+              <text value=""/>
+            </properties>
+          </component>
         </children>
       </grid>
     </children>
