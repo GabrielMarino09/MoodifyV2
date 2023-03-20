@@ -12,7 +12,11 @@
     <children>
       <grid id="fc428" binding="OptionsPanel" layout-manager="GridBagLayout">
         <constraints>
-          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <minimum-size width="600" height="785"/>
+            <preferred-size width="600" height="785"/>
+            <maximum-size width="600" height="785"/>
+          </grid>
         </constraints>
         <properties>
           <background color="-1975086"/>
@@ -352,20 +356,23 @@
           <grid id="6fc00" binding="PreviewPlane" layout-manager="GridBagLayout">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag top="0" left="0" bottom="100" right="0" weightx="0.0" weighty="0.0" ipadx="150" ipady="100"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
             </constraints>
             <properties>
               <background color="-4674410"/>
               <enabled value="true"/>
               <foreground color="-4674410"/>
               <inheritsPopupMenu value="true"/>
+              <maximumSize width="900" height="250"/>
+              <minimumSize width="900" height="250"/>
+              <preferredSize width="900" height="250"/>
             </properties>
             <border type="none"/>
             <children>
               <component id="96a96" class="javax.swing.JLabel" binding="ImageLBL">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                  <gridbag top="0" left="0" bottom="0" right="70" weightx="0.0" weighty="0.0"/>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <gridbag top="0" left="45" bottom="0" right="0" weightx="0.0" weighty="0.0"/>
                 </constraints>
                 <properties>
                   <icon value="Images/DemoCover.gif"/>
@@ -376,7 +383,7 @@
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
                   <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                  <gridbag weightx="0.0" weighty="0.0" ipadx="300"/>
+                  <gridbag top="25" left="25" bottom="25" right="50" weightx="0.0" weighty="0.0" ipadx="50"/>
                 </constraints>
                 <properties>
                   <background color="-4674410"/>
@@ -387,7 +394,11 @@
                 <children>
                   <component id="ea733" class="javax.swing.JLabel" binding="CSongNameLBL">
                     <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="2" indent="0" use-parent-layout="false">
+                        <minimum-size width="500" height="50"/>
+                        <preferred-size width="500" height="50"/>
+                        <maximum-size width="500" height="50"/>
+                      </grid>
                     </constraints>
                     <properties>
                       <background color="-4674410"/>
@@ -398,7 +409,11 @@
                   </component>
                   <component id="b448f" class="javax.swing.JLabel" binding="CAlbumNameLBL">
                     <constraints>
-                      <grid row="2" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <grid row="2" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="2" indent="0" use-parent-layout="false">
+                        <minimum-size width="500" height="50"/>
+                        <preferred-size width="500" height="50"/>
+                        <maximum-size width="500" height="50"/>
+                      </grid>
                     </constraints>
                     <properties>
                       <background color="-4674410"/>
@@ -409,7 +424,11 @@
                   </component>
                   <component id="c21d1" class="javax.swing.JLabel" binding="CArtistNameLBL">
                     <constraints>
-                      <grid row="1" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <grid row="1" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="2" indent="0" use-parent-layout="false">
+                        <minimum-size width="500" height="50"/>
+                        <preferred-size width="500" height="50"/>
+                        <maximum-size width="500" height="50"/>
+                      </grid>
                     </constraints>
                     <properties>
                       <background color="-4674410"/>
@@ -420,7 +439,7 @@
                   </component>
                   <component id="d8e06" class="javax.swing.JButton" binding="GoBack">
                     <constraints>
-                      <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
+                      <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
                         <minimum-size width="40" height="40"/>
                         <preferred-size width="40" height="40"/>
                         <maximum-size width="40" height="40"/>
@@ -431,13 +450,13 @@
                       <borderPainted value="false"/>
                       <contentAreaFilled value="false"/>
                       <foreground color="-4674410"/>
-                      <icon value="Images/GB.png"/>
+                      <icon value="Images/Icons/GB.png"/>
                       <text value=""/>
                     </properties>
                   </component>
                   <component id="90415" class="javax.swing.JButton" binding="Pause">
                     <constraints>
-                      <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
+                      <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
                         <minimum-size width="40" height="40"/>
                         <preferred-size width="40" height="40"/>
                         <maximum-size width="40" height="40"/>
@@ -448,13 +467,13 @@
                       <borderPainted value="false"/>
                       <contentAreaFilled value="false"/>
                       <foreground color="-4674410"/>
-                      <icon value="Images/PlayPause.png"/>
+                      <icon value="Images/Icons/PlayPause.png"/>
                       <text value=""/>
                     </properties>
                   </component>
                   <component id="cfb55" class="javax.swing.JButton" binding="FastForward">
                     <constraints>
-                      <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false">
+                      <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
                         <minimum-size width="40" height="40"/>
                         <preferred-size width="40" height="40"/>
                         <maximum-size width="40" height="40"/>
@@ -465,7 +484,7 @@
                       <borderPainted value="false"/>
                       <contentAreaFilled value="false"/>
                       <foreground color="-4674410"/>
-                      <icon value="Images/FF.png"/>
+                      <icon value="Images/Icons/FF.png"/>
                       <text value=""/>
                     </properties>
                   </component>
