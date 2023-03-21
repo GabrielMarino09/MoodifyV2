@@ -1,5 +1,9 @@
 package StageOne;
 
+import authorization.PKCE.PKCE.AuthorizationCode;
+import authorization.PKCE.PKCE.AuthorizationCodeRefresh;
+import authorization.PKCE.PKCE.AuthorizationCodeUri;
+
 import javax.swing.*;
 import java.awt.Image;
 import java.awt.Taskbar;
@@ -24,7 +28,7 @@ public class StageOne extends LoginUI {
             System.out.println("There was a security exception for: 'taskbar.setIconImage'");
         }
         frame.setIconImage(image);
-        frame.setContentPane(new LoginUI().LoginUI);
+        frame.setContentPane(new SpotifyLoginUI().SpotifyLoginUI);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);

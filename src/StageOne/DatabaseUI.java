@@ -24,7 +24,6 @@ public class DatabaseUI {
     private JLabel AlbumHeadingLabel;
     private JLabel SongHeadingLabel;
     private JLabel MoodHeadingLabel;
-    private JLabel LikedHeadingLabel;
     private JTable Table01;
 
     private JScrollPane sp;
@@ -118,12 +117,13 @@ public class DatabaseUI {
         Image image = getImage();
         frame.setIconImage(image);
         frame.setContentPane(ui.DatabaseUIPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.pack();
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     public DatabaseUI() {
+
         BackButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -141,7 +141,6 @@ public class DatabaseUI {
         String[][] table = getData();
         Table01 = new JTable(table, columnNames);
         sp = new JScrollPane(Table01);
-
     }
 
     private static Image getImage() {

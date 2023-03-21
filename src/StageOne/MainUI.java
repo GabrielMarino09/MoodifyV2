@@ -32,6 +32,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.*;
 import java.util.ArrayList;
 
 
@@ -54,7 +55,7 @@ public class MainUI {
     private JButton Option7Button;
     private JButton Option8Button;
     private JButton Option9Button;
-    private JPanel MainUI;
+    public JPanel MainUI;
     private JPanel OptionsPanel;
     private JPanel DateTimePanel;
     private JPanel CompanyPanel;
@@ -75,7 +76,43 @@ public class MainUI {
     private JButton GoBack;
     private JButton Pause;
     private JButton FastForward;
-    private static final String userId = "2o6dxgdhlsl9wdmtahmuy3vm6";
+    private JPanel DP;
+    private JPanel TP;
+
+    public static Connection dbConnector()
+    {
+        try {
+            Class.forName("org.sqlite.JDBC");
+            Connection conn= DriverManager.getConnection("jdbc:sqlite:Database/Moodify.db");
+            JOptionPane.showMessageDialog(null,"Connection is successful to database!");
+            return conn;
+
+        }catch(Exception e) {
+            JOptionPane.showMessageDialog(null,e);
+            return null;
+        }
+    }
+    public static String GGID(){
+        Connection conn = null;
+        String query = "SELECT * from Uinfo";
+        String GID = "";
+        try {
+            conn = dbConnector();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                GID = rs.getString(1);
+                System.out.println(GID);
+            }
+            return GID;
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        return GGID();
+    }
+    private static final String userId = GGID();
+    //UID "2o6dxgdhlsl9wdmtahmuy3vm6"
     //private static final String userId = "gwq66wps2n6f7ed2mw0rsk7v3";
 
     /*
@@ -170,7 +207,7 @@ public class MainUI {
                 }
                 frame.setIconImage(image);
                 frame.setContentPane(new DatabaseUI().DatabaseUIPanel);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.pack();
                 frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 frame.setVisible(true);
@@ -1546,6 +1583,44 @@ public class MainUI {
                 } catch (ParseException ex) {
                     throw new RuntimeException(ex);
                 }
+            }
+        });
+        Option5Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MainUI.setBackground(new Color(225, 220, 210));
+                CompanyPanel.setBackground(new Color(225, 220, 210));
+                DateTimePanel.setBackground(new Color(225, 220, 210));
+                PlaybackPanel.setBackground(new Color(225, 220, 210));
+                MoodifyLogoLabel.setForeground(new Color(92, 82, 63));
+                OptionsPanel.setBackground(new Color(225, 220, 210));
+                DP.setBackground(new Color(225, 220, 210));
+                TP.setBackground(new Color(225, 220, 210));
+                DateLabel.setForeground(new Color(92, 82, 63));
+                DayLabel.setForeground(new Color(92, 82, 63));
+                TimeLabel.setForeground(new Color(92, 82, 63));
+            }
+        });
+        Option4Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                    MainUI.setBackground(new Color(92, 82, 63));
+                    CompanyPanel.setBackground(new Color(92, 82, 63));
+                    DateTimePanel.setBackground(new Color(92, 82, 63));
+                    PlaybackPanel.setBackground(new Color(92, 82, 63));
+                    MoodifyLogoLabel.setForeground(new Color(225, 220, 210));
+                    OptionsPanel.setBackground(new Color(92, 82, 63));
+                    DP.setBackground(new Color(92, 82, 63));
+                    TP.setBackground(new Color(92, 82, 63));
+                    DayLabel.setForeground(new Color(225, 220, 210));
+                    DateLabel.setForeground(new Color(225, 220, 210));
+                    TimeLabel.setForeground(new Color(225, 220, 210));
+            }
+        });
+        Option1Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
             }
         });
     }

@@ -7,6 +7,7 @@ import se.michaelthelin.spotify.SpotifyHttpManager;
 import se.michaelthelin.spotify.requests.authorization.authorization_code.AuthorizationCodeUriRequest;
 
 //Imports all the necessary Java libraries
+import java.io.IOException;
 import java.net.URI;
 
 //Initializes AuthorizationCodeUri class
@@ -42,6 +43,13 @@ public class AuthorizationCodeUri {
     public static void authorizationCodeUri_Sync() {
         final URI uri = authorizationCodeUriRequest.execute();
         System.out.println("URI: " + uri.toString());
+        String URISearch = String.valueOf(uri);
+        try {
+            java.awt.Desktop.getDesktop().browse(URI.create(URISearch));
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     //Executes what was previously set to happen

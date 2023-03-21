@@ -3,7 +3,12 @@ package TheGrid;
 
 //Imports all the necessary libraries from the Spotify API developed by Michael Thelin
 
+import StageOne.StageOne;
 import authorization.PKCE.PKCE.AuthorizationCodeRefresh;
+import StageOne.MainUI;
+import java.awt.*;
+import java.awt.Image;
+import java.net.URL;
 import java.sql.*;
 import javax.swing.*;
 import org.apache.hc.core5.http.ParseException;
@@ -17,6 +22,7 @@ import se.michaelthelin.spotify.requests.authorization.authorization_code.Author
 import se.michaelthelin.spotify.requests.data.browse.GetRecommendationsRequest;
 import se.michaelthelin.spotify.requests.data.browse.miscellaneous.GetAvailableGenreSeedsRequest;
 import se.michaelthelin.spotify.requests.data.follow.GetUsersFollowedArtistsRequest;
+import se.michaelthelin.spotify.requests.data.library.CheckUsersSavedTracksRequest;
 import se.michaelthelin.spotify.requests.data.library.GetUsersSavedTracksRequest;
 import se.michaelthelin.spotify.requests.data.playlists.GetListOfUsersPlaylistsRequest;
 import se.michaelthelin.spotify.requests.data.tracks.GetAudioAnalysisForTrackRequest;
@@ -43,7 +49,25 @@ public class Fetch {
             return null;
         }
     }
-
+    public static String GGID(){
+        Connection conn = null;
+        String query = "SELECT * from Uinfo";
+        String GID = "";
+        try {
+            conn = dbConnector();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                GID = rs.getString(1);
+                System.out.println(GID);
+            }
+            return GID;
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        return GGID();
+    }
     private static ArrayList<String[]> getData(){
         ArrayList<String[]> table = new ArrayList<>();
         Connection conn = null;
@@ -87,7 +111,7 @@ public class Fetch {
     }
 
     //UserID present at the User's profile page
-    private static final String userId = "2o6dxgdhlsl9wdmtahmuy3vm6";
+    private static final String userId = GGID();
     //private static final String userId = "gwq66wps2n6f7ed2mw0rsk7v3";
     /*
     Access token retrieved from the AuthorizationCodeRefresh Class
@@ -142,7 +166,8 @@ public class Fetch {
 
     //Initializes Fetch class
     public static void Fetch() {
-
+        getData();
+        dbConnector();
         try {
             //Gets the information regarding the users playlists (both public and private)
             System.out.println("-------------------------------------------------------------------------------------");
@@ -360,6 +385,8 @@ public class Fetch {
             System.out.println("Total Number of playlists: " + playlistSimplifiedPaging.getTotal());
             System.out.println("Number of Saved Tracks: " + savedTrackPaging.getTotal());
             System.out.println("Number of Artists Followed: " + artistPagingCursorbased.getTotal());
+            mainUILauncher();
+
 
 
         } catch (IOException | SpotifyWebApiException | ParseException e) {
@@ -369,6 +396,27 @@ public class Fetch {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static void mainUILauncher() {
+        JFrame frame = new JFrame("Moodify");
+        final Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
+        final URL imageResource = StageOne.class.getClassLoader().getResource("Images/Logo.png");
+        final Image image = defaultToolkit.getImage(imageResource);
+        final Taskbar taskbar = Taskbar.getTaskbar();
+        try {
+            taskbar.setIconImage(image);
+        } catch (final UnsupportedOperationException e) {
+            System.out.println("The os does not support: 'taskbar.setIconImage'");
+        } catch (final SecurityException e) {
+            System.out.println("There was a security exception for: 'taskbar.setIconImage'");
+        }
+        frame.setIconImage(image);
+        frame.setContentPane(new MainUI().MainUI);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame.setVisible(true);
     }
 
     public static void main(String[] args) {

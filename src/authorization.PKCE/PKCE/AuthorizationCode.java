@@ -2,6 +2,7 @@
 package authorization.PKCE.PKCE;
 
 //Imports all the necessary libraries from the Spotify API developed by Michael Thelin
+import StageOne.GetCode;
 import se.michaelthelin.spotify.SpotifyApi;
 import se.michaelthelin.spotify.SpotifyHttpManager;
 import se.michaelthelin.spotify.exceptions.SpotifyWebApiException;
@@ -27,7 +28,7 @@ public class AuthorizationCode extends AuthorizationCodeUri {
     private static final URI redirectUri = SpotifyHttpManager.makeUri("https://www.greengates.edu.mx/");
 
     //Code retrieved from the redirected URL
-    private static final String code = "AQDE1J-KkHnU1tLONg-3q5pMy8gEgpY4mz-5r1yvm8Fp9abBgjsT2l31XRDUSA1eFJRiux54AIAanwzlM1TPCiAA99x-VgKWVKA9a-1fNYTvHbeAXYm--RPm6Hip33msxLSQMh83VO18deCSiuRpqgIrJQGqerUBWzHsRIK6eiv28yNtbjKvelHAHX_OVamO-mu05jWBKfKlloBYz5SbPkimF3D2SQ9SeJoht4OdpYvGgx2o9SDSeRFAgksI8JLQYsUpo20jTiS2wHp8ELyP-c8uCodx-L0aTRmlwqY7OljvMany1r31hPz9rpzNnEdz-dFrkyAN5x14TFQRKkzEG7Dg8EDBVCl1MBAkE9KKaI1umHbKqfFredneaMFe8gqBK42iw_BNcVQWUUcDAQYQb9eVj0jDN1sckF3jyD7DslYqehuoQFBDobwPFI00ODl1qgdGvSDYkQx79aOsMDjMVDuA6Q6cIj-uGh4_o9lOO4_RqUtezev9OmGYKQzeH-9vE_gCKyx_LK8cKhoyZruSvJc-U2_QEZzkC_uvW1d5jwd2t3Uq2F1xhv7na3zpxMtUzOUQlrNrOlhc9eb7i9LdSclq2KJ-YtEdetZCArOoZ1IfFeAcB0zWuhchBVXCJJU2rrZ_nsaqAPh0bPMGHgBevbbjoVF_ShjIe8RBhuX4cHH9alppz1gMWQgeX2mjLb2c2nYK";
+    private static final String code = GetCode.GCode();
 
     //Sets all the information that will be used by Spotify to generate a token
     private static final SpotifyApi spotifyApi = new SpotifyApi.Builder()
@@ -41,20 +42,18 @@ public class AuthorizationCode extends AuthorizationCodeUri {
             .build();
 
     //Retrieves the authorization code from Spotify
-    public static void authorizationCode_Sync() {
+    public static String authorizationCode_Sync() {
+        String TR = "";
         try {
             final AuthorizationCodeCredentials authorizationCodeCredentials = authorizationCodeRequest.execute();
-
             //Gets both Access Token and Refresh Token from Spotify
-            spotifyApi.setAccessToken(authorizationCodeCredentials.getAccessToken());
             spotifyApi.setRefreshToken(authorizationCodeCredentials.getRefreshToken());
-
-            System.out.println("Expires in: " + authorizationCodeCredentials.getExpiresIn());
-            System.out.println("Expires in: " + authorizationCodeCredentials.getAccessToken());
-            System.out.println("Expires in: " + authorizationCodeCredentials.getRefreshToken());
+            TR = authorizationCodeCredentials.getRefreshToken();
+            System.out.println("Refresh Token: " + authorizationCodeCredentials.getRefreshToken());
         } catch (IOException | SpotifyWebApiException | ParseException e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("Error on AC: " + e.getMessage());
         }
+        return TR;
     }
 
     //Executes what was previously set to happen
