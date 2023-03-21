@@ -218,119 +218,9 @@ public class MainUI {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                PlaybackPanel.setVisible(true);
-                VideoLabel.setIcon(AnnoyedGif);
-                VideoLabel.setVisible(true);
-                try {
-                    final Device[] devices = getUsersAvailableDevicesRequest.execute();
-
-                    String DID = "";
-                    System.out.println("Length: " + devices.length);
-                    if (devices.length == 1) {
-                        System.out.println("Device ID: " + devices[0].getId());
-                        DID = devices[0].getId();
-                    }
-                    if (devices.length == 0) {
-                        System.out.println("Please launch the Spotify App on your computer");
-                    }
-                    if (devices.length > 1) {
-                        System.out.println("Please close every other spotify app but your computer's");
-                    }
-
-
-                    final Paging<se.michaelthelin.spotify.model_objects.specification.Track> trackPaging = getUsersTopTracksRequest.execute();
-
-                    System.out.println("Total: " + trackPaging.getTotal());
-
-                    final Paging<se.michaelthelin.spotify.model_objects.specification.Track> Tracklist = getUsersTopTracksRequest.execute();
-
-                    ArrayList<String> TLAR = new ArrayList<String>();
-                    for (se.michaelthelin.spotify.model_objects.specification.Track List : Tracklist.getItems()) {
-                        System.out.println("Name: " + List.getName());
-                        System.out.println("ID: " + List.getId());
-                        System.out.println("Uri: " + List.getUri());
-                        TLAR.add(List.getId());
-                    }
-
-                    double MiE = 0.4;
-                    double MaE = 0.5;
-                    final GetRecommendationsRequest getRecommendationsRequest = spotifyApi.getRecommendations()
-                            .limit(1)
-                            .max_popularity(80)
-                            .min_popularity(10)
-                            .seed_tracks(TLAR.get(0))
-                            .seed_tracks(TLAR.get(1))
-                            .seed_tracks(TLAR.get(2))
-                            .seed_tracks(TLAR.get(3))
-                            .seed_tracks(TLAR.get(4))
-                            .seed_tracks(TLAR.get(5))
-                            .seed_tracks(TLAR.get(6))
-                            .seed_tracks(TLAR.get(7))
-                            .seed_tracks(TLAR.get(8))
-                            .seed_tracks(TLAR.get(9))
-                            .min_energy((float) MiE)
-                            .max_energy((float) MaE)
-                            .target_popularity(50)
-                            .build();
-
-                    final Recommendations recommendations = getRecommendationsRequest.execute();
-
-                    for (TrackSimplified SpotifyRecommendations : recommendations.getTracks()) {
-                        System.out.println("-------------------------------------------------------------------------------------");
-                        System.out.println("Recommendations:");
-                        //------------------------------------------------------------------------------------------------------
-                        System.out.println("Recommended Track Name: " + SpotifyRecommendations.getName());
-                        System.out.println("Recommended Track ID: " + SpotifyRecommendations.getId());
-                        System.out.println("Recommended Track Uri: " + SpotifyRecommendations.getUri());
-                        final AddItemToUsersPlaybackQueueRequest addItemToUsersPlaybackQueueRequest = spotifyApi
-                                .addItemToUsersPlaybackQueue(SpotifyRecommendations.getUri())
-                                .device_id(DID)
-                                .build();
-                        addItemToUsersPlaybackQueueRequest.execute();
-                    }
-
-
-                    System.out.println("-------------------------------------------------------------------------------------");
-                    final SkipUsersPlaybackToNextTrackRequest skipUsersPlaybackToNextTrackRequest = spotifyApi
-                            .skipUsersPlaybackToNextTrack()
-                            .device_id(DID)
-                            .build();
-                    skipUsersPlaybackToNextTrackRequest.execute();
-
-                    Thread.sleep(5000);
-                    final CurrentlyPlayingContext currentlyPlayingContext = getInformationAboutUsersCurrentPlaybackRequest.execute();
-                    final String NPID = currentlyPlayingContext.getItem().getId();
-                    final String id = NPID;
-                    final GetTrackRequest getTrackRequest = spotifyApi.getTrack(id)
-                            .build();
-                    final Track track = getTrackRequest.execute();
-
-                    System.out.println("Track Name: " + track.getName());
-                    CSongNameLBL.setText(track.getName());
-                    System.out.println("Album: " + track.getAlbum().getName());
-                    CAlbumNameLBL.setText(track.getAlbum().getName());
-                    for (ArtistSimplified artist : track.getArtists()) {
-                        System.out.println("Artist: " + artist.getName());
-                        artist.getName();
-                        CArtistNameLBL.setText(artist.getName());
-                        break;
-                    }
-                    System.out.println("Artist: " + track.getArtists());
-                    System.out.println("Image: " + track.getAlbum().getImages());
-
-                    se.michaelthelin.spotify.model_objects.specification.Image[] IURL = track.getAlbum().getImages();
-                    String ImageURLBIG = String.valueOf(IURL[0].getUrl());
-                    System.out.println("Image: " + ImageURLBIG);
-                    URL getImageUrl = new URL(ImageURLBIG);
-                    BufferedImage ImageBuffer = ImageIO.read(getImageUrl);
-                    Image ResizedAlbumCover = ImageBuffer.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-                    ImageIcon IA = new ImageIcon(ResizedAlbumCover);
-                    ImageLBL.setIcon(IA);
-
-
-                } catch (IOException | SpotifyWebApiException | ParseException | InterruptedException p) {
-                    throw new RuntimeException(p);
-                }
+                double MiE = 0.4;
+                double MaE = 0.5;
+                getTrack((float)MiE, (float) MaE, AnnoyedGif);
             }
         });
 
@@ -346,15 +236,11 @@ public class MainUI {
 
                     String DID = "";
                     System.out.println("Length: " + devices.length);
-                    if (devices.length == 1) {
-                        System.out.println("Device ID: " + devices[0].getId());
-                        DID = devices[0].getId();
-                    }
                     if (devices.length == 0) {
                         System.out.println("Please launch the Spotify App on your computer");
-                    }
-                    if (devices.length > 1) {
-                        System.out.println("Please close every other spotify app but your computer's");
+                    } else {
+                        System.out.println("Device ID: " + devices[0].getId());
+                        DID = devices[0].getId();
                     }
 
 
@@ -457,119 +343,9 @@ public class MainUI {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                PlaybackPanel.setVisible(true);
-                VideoLabel.setIcon(ExcitedGif);
-                VideoLabel.setVisible(true);
-                try {
-                    final Device[] devices = getUsersAvailableDevicesRequest.execute();
-
-                    String DID = "";
-                    System.out.println("Length: " + devices.length);
-                    if (devices.length == 1) {
-                        System.out.println("Device ID: " + devices[0].getId());
-                        DID = devices[0].getId();
-                    }
-                    if (devices.length == 0) {
-                        System.out.println("Please launch the Spotify App on your computer");
-                    }
-                    if (devices.length > 1) {
-                        System.out.println("Please close every other spotify app but your computer's");
-                    }
-
-
-                    final Paging<se.michaelthelin.spotify.model_objects.specification.Track> trackPaging = getUsersTopTracksRequest.execute();
-
-                    System.out.println("Total: " + trackPaging.getTotal());
-
-                    final Paging<se.michaelthelin.spotify.model_objects.specification.Track> Tracklist = getUsersTopTracksRequest.execute();
-
-                    ArrayList<String> TLAR = new ArrayList<String>();
-                    for (se.michaelthelin.spotify.model_objects.specification.Track List : Tracklist.getItems()) {
-                        System.out.println("Name: " + List.getName());
-                        System.out.println("ID: " + List.getId());
-                        System.out.println("Uri: " + List.getUri());
-                        TLAR.add(List.getId());
-                    }
-
-                    double MiE = 0.8;
-                    double MaE = 0.9;
-                    final GetRecommendationsRequest getRecommendationsRequest = spotifyApi.getRecommendations()
-                            .limit(1)
-                            .max_popularity(80)
-                            .min_popularity(10)
-                            .seed_tracks(TLAR.get(0))
-                            .seed_tracks(TLAR.get(1))
-                            .seed_tracks(TLAR.get(2))
-                            .seed_tracks(TLAR.get(3))
-                            .seed_tracks(TLAR.get(4))
-                            .seed_tracks(TLAR.get(5))
-                            .seed_tracks(TLAR.get(6))
-                            .seed_tracks(TLAR.get(7))
-                            .seed_tracks(TLAR.get(8))
-                            .seed_tracks(TLAR.get(9))
-                            .min_energy((float) MiE)
-                            .max_energy((float) MaE)
-                            .target_popularity(50)
-                            .build();
-
-                    final Recommendations recommendations = getRecommendationsRequest.execute();
-
-                    for (TrackSimplified SpotifyRecommendations : recommendations.getTracks()) {
-                        System.out.println("-------------------------------------------------------------------------------------");
-                        System.out.println("Recommendations:");
-                        //------------------------------------------------------------------------------------------------------
-                        System.out.println("Recommended Track Name: " + SpotifyRecommendations.getName());
-                        System.out.println("Recommended Track ID: " + SpotifyRecommendations.getId());
-                        System.out.println("Recommended Track Uri: " + SpotifyRecommendations.getUri());
-                        final AddItemToUsersPlaybackQueueRequest addItemToUsersPlaybackQueueRequest = spotifyApi
-                                .addItemToUsersPlaybackQueue(SpotifyRecommendations.getUri())
-                                .device_id(DID)
-                                .build();
-                        addItemToUsersPlaybackQueueRequest.execute();
-                    }
-
-
-                    System.out.println("-------------------------------------------------------------------------------------");
-                    final SkipUsersPlaybackToNextTrackRequest skipUsersPlaybackToNextTrackRequest = spotifyApi
-                            .skipUsersPlaybackToNextTrack()
-                            .device_id(DID)
-                            .build();
-                    skipUsersPlaybackToNextTrackRequest.execute();
-
-                    Thread.sleep(5000);
-                    final CurrentlyPlayingContext currentlyPlayingContext = getInformationAboutUsersCurrentPlaybackRequest.execute();
-                    final String NPID = currentlyPlayingContext.getItem().getId();
-                    final String id = NPID;
-                    final GetTrackRequest getTrackRequest = spotifyApi.getTrack(id)
-                            .build();
-                    final Track track = getTrackRequest.execute();
-
-                    System.out.println("Track Name: " + track.getName());
-                    CSongNameLBL.setText(track.getName());
-                    System.out.println("Album: " + track.getAlbum().getName());
-                    CAlbumNameLBL.setText(track.getAlbum().getName());
-                    for (ArtistSimplified artist : track.getArtists()) {
-                        System.out.println("Artist: " + artist.getName());
-                        artist.getName();
-                        CArtistNameLBL.setText(artist.getName());
-                        break;
-                    }
-                    System.out.println("Artist: " + track.getArtists());
-                    System.out.println("Image: " + track.getAlbum().getImages());
-
-                    se.michaelthelin.spotify.model_objects.specification.Image[] IURL = track.getAlbum().getImages();
-                    String ImageURLBIG = String.valueOf(IURL[0].getUrl());
-                    System.out.println("Image: " + ImageURLBIG);
-                    URL getImageUrl = new URL(ImageURLBIG);
-                    BufferedImage ImageBuffer = ImageIO.read(getImageUrl);
-                    Image ResizedAlbumCover = ImageBuffer.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-                    ImageIcon IA = new ImageIcon(ResizedAlbumCover);
-                    ImageLBL.setIcon(IA);
-
-
-                } catch (IOException | SpotifyWebApiException | ParseException | InterruptedException p) {
-                    throw new RuntimeException(p);
-                }
+                double MiE = 0.8;
+                double MaE = 0.9;
+                getTrack((float) MiE, (float) MaE, ExcitedGif);
             }
         });
 
@@ -1623,6 +1399,117 @@ public class MainUI {
                 System.exit(0);
             }
         });
+    }
+
+    private void getTrack(float MiE, float MaE, ImageIcon ExcitedGif) {
+        PlaybackPanel.setVisible(true);
+        VideoLabel.setIcon(ExcitedGif);
+        VideoLabel.setVisible(true);
+        try {
+            final Device[] devices = getUsersAvailableDevicesRequest.execute();
+
+            String DID = "";
+            System.out.println("Length: " + devices.length);
+            if (devices.length == 0) {
+                System.out.println("Please launch the Spotify App on your computer");
+            } else {
+                System.out.println("Device ID: " + devices[0].getId());
+                DID = devices[0].getId();
+            }
+
+
+            final Paging<se.michaelthelin.spotify.model_objects.specification.Track> trackPaging = getUsersTopTracksRequest.execute();
+
+            System.out.println("Total: " + trackPaging.getTotal());
+
+            final Paging<se.michaelthelin.spotify.model_objects.specification.Track> Tracklist = getUsersTopTracksRequest.execute();
+
+            ArrayList<String> TLAR = new ArrayList<String>();
+            for (se.michaelthelin.spotify.model_objects.specification.Track List : Tracklist.getItems()) {
+                System.out.println("Name: " + List.getName());
+                System.out.println("ID: " + List.getId());
+                System.out.println("Uri: " + List.getUri());
+                TLAR.add(List.getId());
+            }
+
+
+            final GetRecommendationsRequest getRecommendationsRequest = spotifyApi.getRecommendations()
+                    .limit(1)
+                    .max_popularity(80)
+                    .min_popularity(10)
+                    .seed_tracks(TLAR.get(0))
+                    .seed_tracks(TLAR.get(1))
+                    .seed_tracks(TLAR.get(2))
+                    .seed_tracks(TLAR.get(3))
+                    .seed_tracks(TLAR.get(4))
+                    .seed_tracks(TLAR.get(5))
+                    .seed_tracks(TLAR.get(6))
+                    .seed_tracks(TLAR.get(7))
+                    .seed_tracks(TLAR.get(8))
+                    .seed_tracks(TLAR.get(9))
+                    .min_energy(MiE)
+                    .max_energy(MaE)
+                    .target_popularity(50)
+                    .build();
+
+            final Recommendations recommendations = getRecommendationsRequest.execute();
+
+            for (TrackSimplified SpotifyRecommendations : recommendations.getTracks()) {
+                System.out.println("-------------------------------------------------------------------------------------");
+                System.out.println("Recommendations:");
+                //------------------------------------------------------------------------------------------------------
+                System.out.println("Recommended Track Name: " + SpotifyRecommendations.getName());
+                System.out.println("Recommended Track ID: " + SpotifyRecommendations.getId());
+                System.out.println("Recommended Track Uri: " + SpotifyRecommendations.getUri());
+                final AddItemToUsersPlaybackQueueRequest addItemToUsersPlaybackQueueRequest = spotifyApi
+                        .addItemToUsersPlaybackQueue(SpotifyRecommendations.getUri())
+                        .device_id(DID)
+                        .build();
+                addItemToUsersPlaybackQueueRequest.execute();
+            }
+
+
+            System.out.println("-------------------------------------------------------------------------------------");
+            final SkipUsersPlaybackToNextTrackRequest skipUsersPlaybackToNextTrackRequest = spotifyApi
+                    .skipUsersPlaybackToNextTrack()
+                    .device_id(DID)
+                    .build();
+            skipUsersPlaybackToNextTrackRequest.execute();
+
+            Thread.sleep(5000);
+            final CurrentlyPlayingContext currentlyPlayingContext = getInformationAboutUsersCurrentPlaybackRequest.execute();
+            final String NPID = currentlyPlayingContext.getItem().getId();
+            final String id = NPID;
+            final GetTrackRequest getTrackRequest = spotifyApi.getTrack(id)
+                    .build();
+            final Track track = getTrackRequest.execute();
+
+            System.out.println("Track Name: " + track.getName());
+            CSongNameLBL.setText(track.getName());
+            System.out.println("Album: " + track.getAlbum().getName());
+            CAlbumNameLBL.setText(track.getAlbum().getName());
+            for (ArtistSimplified artist : track.getArtists()) {
+                System.out.println("Artist: " + artist.getName());
+                artist.getName();
+                CArtistNameLBL.setText(artist.getName());
+                break;
+            }
+            System.out.println("Artist: " + track.getArtists());
+            System.out.println("Image: " + track.getAlbum().getImages());
+
+            se.michaelthelin.spotify.model_objects.specification.Image[] IURL = track.getAlbum().getImages();
+            String ImageURLBIG = String.valueOf(IURL[0].getUrl());
+            System.out.println("Image: " + ImageURLBIG);
+            URL getImageUrl = new URL(ImageURLBIG);
+            BufferedImage ImageBuffer = ImageIO.read(getImageUrl);
+            Image ResizedAlbumCover = ImageBuffer.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+            ImageIcon IA = new ImageIcon(ResizedAlbumCover);
+            ImageLBL.setIcon(IA);
+
+
+        } catch (IOException | SpotifyWebApiException | ParseException | InterruptedException p) {
+            throw new RuntimeException(p);
+        }
     }
 
 
