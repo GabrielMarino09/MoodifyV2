@@ -1,4 +1,4 @@
-package graph;
+/*package graph;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -46,5 +46,5 @@ public class PieChartSample extends Application{
             return list;
         }
     }
-
+ */
 
