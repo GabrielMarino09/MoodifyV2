@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="StageOne.RecentPlaylist">
+  <grid id="27dc6" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="20" width="1887" height="1204"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <grid id="288d1" layout-manager="GridBagLayout">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <grid id="986c" binding="RecentPlaylistPanel" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <background color="-1975086"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <grid id="a4d1d" binding="DateTimePanel" layout-manager="GridBagLayout">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <background color="-1975086"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <grid id="d70f7" layout-manager="GridBagLayout">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                      <gridbag top="0" left="125" bottom="0" right="0" weightx="0.0" weighty="0.0" ipadx="100" ipady="100"/>
+                    </constraints>
+                    <properties>
+                      <background color="-1975086"/>
+                    </properties>
+                    <border type="none"/>
+                    <children>
+                      <component id="d1952" class="javax.swing.JLabel" binding="DayLabel">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                          <gridbag weightx="1.0" weighty="1.0"/>
+                        </constraints>
+                        <properties>
+                          <background color="-1975086"/>
+                          <font name="Felix Titling" size="24"/>
+                          <foreground color="-10726849"/>
+                          <text value="Monday"/>
+                        </properties>
+                      </component>
+                      <component id="2a504" class="javax.swing.JLabel" binding="DateLabel">
+                        <constraints>
+                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                          <gridbag weightx="1.0" weighty="1.0"/>
+                        </constraints>
+                        <properties>
+                          <background color="-1975086"/>
+                          <font name="Felix Titling" size="24"/>
+                          <foreground color="-10726849"/>
+                          <text value="04/07/2022"/>
+                        </properties>
+                      </component>
+                    </children>
+                  </grid>
+                  <grid id="6fde" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="0" left="0" bottom="0" right="0"/>
+                    <constraints>
+                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                      <gridbag top="0" left="0" bottom="0" right="25" weightx="0.0" weighty="0.0" ipadx="125"/>
+                    </constraints>
+                    <properties>
+                      <background color="-1975086"/>
+                    </properties>
+                    <border type="none"/>
+                    <children>
+                      <component id="4f946" class="javax.swing.JLabel" binding="TimeLabel">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <background color="-1975086"/>
+                          <font name="Felix Titling" size="36"/>
+                          <foreground color="-10726849"/>
+                          <text value="12:34"/>
+                        </properties>
+                      </component>
+                    </children>
+                  </grid>
+                </children>
+              </grid>
+              <grid id="66e4" binding="CompanyPanel" layout-manager="GridBagLayout">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <background color="-1975086"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <component id="9b049" class="javax.swing.JLabel" binding="MoodifyLogoLabel">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <gridbag top="0" left="125" bottom="0" right="0" weightx="1.0" weighty="1.0" ipadx="900" ipady="15"/>
+                    </constraints>
+                    <properties>
+                      <background color="-1975086"/>
+                      <font name="British Castilla" size="24"/>
+                      <foreground color="-10726849"/>
+                      <text value="Moodify"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+              <grid id="f7e17" binding="ListNamePanel" layout-manager="GridBagLayout">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <background color="-1975086"/>
+                  <foreground color="-1975086"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <grid id="d48a8" binding="RRPanelRRPanel" layout-manager="GridBagLayout">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                      <gridbag top="0" left="75" bottom="0" right="50" weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                    <properties>
+                      <background color="-1975086"/>
+                      <font name="Felix Titling" size="24"/>
+                      <foreground color="-1975086"/>
+                    </properties>
+                    <border type="none"/>
+                    <children>
+                      <component id="dad1d" class="javax.swing.JLabel" binding="SongHeadingLabel">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                          <gridbag top="0" left="10" bottom="0" right="0" weightx="0.0" weighty="0.0" ipadx="25" ipady="25"/>
+                        </constraints>
+                        <properties>
+                          <background color="-4674410"/>
+                          <font name="Felix Titling" size="24"/>
+                          <foreground color="-10726849"/>
+                          <horizontalTextPosition value="0"/>
+                          <text value="Recently Reproduced:"/>
+                        </properties>
+                      </component>
+                      <component id="406e7" class="javax.swing.JButton" binding="RR1">
+                        <constraints>
+                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                          <gridbag top="50" left="10" bottom="50" right="0" weightx="0.0" weighty="0.0"/>
+                        </constraints>
+                        <properties>
+                          <borderPainted value="false"/>
+                          <contentAreaFilled value="false"/>
+                          <focusPainted value="true"/>
+                          <label value=""/>
+                          <maximumSize width="200" height="200"/>
+                          <minimumSize width="200" height="200"/>
+                          <preferredSize width="200" height="200"/>
+                          <text value=""/>
+                        </properties>
+                      </component>
+                      <component id="e6ceb" class="javax.swing.JButton" binding="RR4">
+                        <constraints>
+                          <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                          <gridbag top="0" left="100" bottom="0" right="0" weightx="0.0" weighty="0.0"/>
+                        </constraints>
+                        <properties>
+                          <borderPainted value="false"/>
+                          <contentAreaFilled value="false"/>
+                          <maximumSize width="200" height="200"/>
+                          <minimumSize width="200" height="200"/>
+                          <preferredSize width="200" height="200"/>
+                          <text value=""/>
+                        </properties>
+                      </component>
+                      <component id="1ee67" class="javax.swing.JButton" binding="RR2">
+                        <constraints>
+                          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                          <gridbag top="0" left="100" bottom="0" right="0" weightx="0.0" weighty="0.0"/>
+                        </constraints>
+                        <properties>
+                          <borderPainted value="false"/>
+                          <contentAreaFilled value="false"/>
+                          <maximumSize width="200" height="200"/>
+                          <minimumSize width="200" height="200"/>
+                          <preferredSize width="200" height="200"/>
+                          <text value=""/>
+                        </properties>
+                      </component>
+                      <component id="4114e" class="javax.swing.JButton" binding="RR3">
+                        <constraints>
+                          <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                          <gridbag top="0" left="100" bottom="0" right="0" weightx="0.0" weighty="0.0"/>
+                        </constraints>
+                        <properties>
+                          <borderPainted value="false"/>
+                          <contentAreaFilled value="false"/>
+                          <label value=""/>
+                          <maximumSize width="200" height="200"/>
+                          <minimumSize width="200" height="200"/>
+                          <preferredSize width="200" height="200"/>
+                          <text value=""/>
+                        </properties>
+                      </component>
+                      <component id="c2d35" class="javax.swing.JButton" binding="RR5">
+                        <constraints>
+                          <grid row="1" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                          <gridbag top="0" left="100" bottom="0" right="0" weightx="0.0" weighty="0.0"/>
+                        </constraints>
+                        <properties>
+                          <borderPainted value="false"/>
+                          <contentAreaFilled value="false"/>
+                          <maximumSize width="200" height="200"/>
+                          <minimumSize width="200" height="200"/>
+                          <preferredSize width="200" height="200"/>
+                          <text value=""/>
+                        </properties>
+                      </component>
+                    </children>
+                  </grid>
+                  <component id="d63e1" class="javax.swing.JButton" binding="BackButton">
+                    <constraints>
+                      <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="10" fill="0" indent="0" use-parent-layout="false"/>
+                      <gridbag top="0" left="75" bottom="60" right="0" weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                    <properties>
+                      <background color="-1975086"/>
+                      <font name="Felix Titling" size="24"/>
+                      <foreground color="-10726849"/>
+                      <text value="Back"/>
+                    </properties>
+                  </component>
+                  <grid id="dadb5" layout-manager="GridBagLayout">
+                    <constraints>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                      <gridbag top="0" left="75" bottom="30" right="50" weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                    <properties>
+                      <background color="-1975086"/>
+                      <font name="Felix Titling" size="24"/>
+                      <foreground color="-1975086"/>
+                    </properties>
+                    <border type="none"/>
+                    <children>
+                      <component id="fa8b3" class="javax.swing.JLabel" binding="MoodifyPlaylists">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                          <gridbag top="0" left="10" bottom="0" right="0" weightx="0.0" weighty="0.0" ipadx="25" ipady="25"/>
+                        </constraints>
+                        <properties>
+                          <background color="-4674410"/>
+                          <font name="Felix Titling" size="24"/>
+                          <foreground color="-10726849"/>
+                          <horizontalTextPosition value="0"/>
+                          <text value="Followed Artists:"/>
+                        </properties>
+                      </component>
+                      <component id="4a32f" class="javax.swing.JButton" binding="MP2">
+                        <constraints>
+                          <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                          <gridbag top="0" left="100" bottom="0" right="0" weightx="0.0" weighty="0.0"/>
+                        </constraints>
+                        <properties>
+                          <borderPainted value="false"/>
+                          <contentAreaFilled value="false"/>
+                          <maximumSize width="200" height="200"/>
+                          <minimumSize width="200" height="200"/>
+                          <preferredSize width="200" height="200"/>
+                          <text value=""/>
+                        </properties>
+                      </component>
+                      <component id="7aaff" class="javax.swing.JButton" binding="MP3">
+                        <constraints>
+                          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                          <gridbag top="0" left="100" bottom="0" right="0" weightx="0.0" weighty="0.0"/>
+                        </constraints>
+                        <properties>
+                          <borderPainted value="false"/>
+                          <contentAreaFilled value="false"/>
+                          <maximumSize width="200" height="200"/>
+                          <minimumSize width="200" height="200"/>
+                          <preferredSize width="200" height="200"/>
+                          <text value=""/>
+                        </properties>
+                      </component>
+                      <component id="72611" class="javax.swing.JButton" binding="MP4">
+                        <constraints>
+                          <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                          <gridbag top="0" left="100" bottom="0" right="0" weightx="0.0" weighty="0.0"/>
+                        </constraints>
+                        <properties>
+                          <borderPainted value="false"/>
+                          <contentAreaFilled value="false"/>
+                          <label value=""/>
+                          <maximumSize width="200" height="200"/>
+                          <minimumSize width="200" height="200"/>
+                          <preferredSize width="200" height="200"/>
+                          <text value=""/>
+                        </properties>
+                      </component>
+                      <component id="6ea47" class="javax.swing.JButton" binding="MP5">
+                        <constraints>
+                          <grid row="1" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                          <gridbag top="0" left="100" bottom="0" right="0" weightx="0.0" weighty="0.0"/>
+                        </constraints>
+                        <properties>
+                          <borderPainted value="false"/>
+                          <contentAreaFilled value="false"/>
+                          <maximumSize width="200" height="200"/>
+                          <minimumSize width="200" height="200"/>
+                          <preferredSize width="200" height="200"/>
+                          <text value=""/>
+                        </properties>
+                      </component>
+                      <component id="8fbcf" class="javax.swing.JButton" binding="MP1">
+                        <constraints>
+                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                          <gridbag top="50" left="10" bottom="50" right="0" weightx="0.0" weighty="0.0"/>
+                        </constraints>
+                        <properties>
+                          <borderPainted value="false"/>
+                          <contentAreaFilled value="false"/>
+                          <focusPainted value="true"/>
+                          <label value=""/>
+                          <maximumSize width="200" height="200"/>
+                          <minimumSize width="200" height="200"/>
+                          <preferredSize width="200" height="200"/>
+                          <text value=""/>
+                        </properties>
+                      </component>
+                    </children>
+                  </grid>
+                </children>
+              </grid>
+            </children>
+          </grid>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>

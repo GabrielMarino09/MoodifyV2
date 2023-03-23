@@ -13,5 +13,6 @@
     <orderEntry type="library" name="openjfx.javafx.swing" level="project" />
     <orderEntry type="library" name="javafx-sdk-19.0.2" level="project" />
     <orderEntry type="library" name="xchart-demo-3.8.2" level="project" />
+    <orderEntry type="library" name="xchart-3.8.0" level="project" />
   </component>
 </module>

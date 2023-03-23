@@ -14,11 +14,14 @@ import se.michaelthelin.spotify.model_objects.specification.*;
 import se.michaelthelin.spotify.requests.data.browse.GetRecommendationsRequest;
 import se.michaelthelin.spotify.requests.data.follow.GetUsersFollowedArtistsRequest;
 import se.michaelthelin.spotify.requests.data.library.GetUsersSavedTracksRequest;
+import se.michaelthelin.spotify.requests.data.library.RemoveUsersSavedTracksRequest;
+import se.michaelthelin.spotify.requests.data.library.SaveTracksForUserRequest;
 import se.michaelthelin.spotify.requests.data.personalization.simplified.GetUsersTopTracksRequest;
 import se.michaelthelin.spotify.requests.data.player.*;
 import se.michaelthelin.spotify.requests.data.playlists.GetListOfUsersPlaylistsRequest;
 import se.michaelthelin.spotify.requests.data.tracks.GetTrackRequest;
 
+import java.awt.Cursor;
 import java.awt.event.ComponentEvent;
 import java.awt.geom.RoundRectangle2D;
 import javax.imageio.ImageIO;
@@ -84,11 +87,9 @@ public class MainUI {
         try {
             Class.forName("org.sqlite.JDBC");
             Connection conn= DriverManager.getConnection("jdbc:sqlite:Database/Moodify.db");
-            JOptionPane.showMessageDialog(null,"Connection is successful to database!");
             return conn;
 
         }catch(Exception e) {
-            JOptionPane.showMessageDialog(null,e);
             return null;
         }
     }
@@ -170,6 +171,30 @@ public class MainUI {
 
 
     public MainUI() {
+        HopefulButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        HappyButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        HopelessButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        SadButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        NeutralButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        AngryButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        ExcitedButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        MotivatedButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        AnnoyedButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        Option1Button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        Option2Button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        Option3Button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        Option4Button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        Option5Button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        Option6Button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        Option7Button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        Option8Button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        Option9Button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        FastForward.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        GoBack.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        Pause.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
         ImageIcon PauseIMG = new ImageIcon("/Users/gabriel/IdeaProjects/MoodifyV2/src/Images/Icons/PlayPause.png");
 
         Pause.setIcon(PauseIMG);
@@ -187,7 +212,6 @@ public class MainUI {
         Option1Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Hello From Option 1 Button");
             }
         });
         Option3Button.addActionListener(new ActionListener() {
@@ -522,6 +546,92 @@ public class MainUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
+            }
+        });
+        Option2Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame frame = new JFrame("Moodify");
+                final Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
+                final URL imageResource = StageOne.class.getClassLoader().getResource("Images/Logo.png");
+                final Image image = defaultToolkit.getImage(imageResource);
+                final Taskbar taskbar = Taskbar.getTaskbar();
+                try {
+                    taskbar.setIconImage(image);
+                } catch (final UnsupportedOperationException a) {
+                    System.out.println("The os does not support: 'taskbar.setIconImage'");
+                } catch (final SecurityException a) {
+                    System.out.println("There was a security exception for: 'taskbar.setIconImage'");
+                }
+                frame.setIconImage(image);
+                try {
+                    frame.setContentPane(new RecentPlaylist().RecentPlaylistPanel);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ParseException ex) {
+                    throw new RuntimeException(ex);
+                } catch (SpotifyWebApiException ex) {
+                    throw new RuntimeException(ex);
+                }
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.pack();
+                frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                frame.setVisible(true);
+            }
+        });
+        Option7Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                final CurrentlyPlayingContext currentlyPlayingContext;
+                try {
+                    currentlyPlayingContext = getInformationAboutUsersCurrentPlaybackRequest.execute();
+                    final String NPID = currentlyPlayingContext.getItem().getId();
+                    final String id = NPID;
+                    final GetTrackRequest getTrackRequest = spotifyApi.getTrack(id)
+                            .build();
+                    final Track track = getTrackRequest.execute();
+                    String CID = track.getId();
+                    final SaveTracksForUserRequest saveTracksForUserRequest = spotifyApi.saveTracksForUser(CID)
+                            .build();
+
+                    saveTracksForUserRequest.execute();
+                    JOptionPane.showMessageDialog(null, "Current track is now added to user's liked songs");
+
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (SpotifyWebApiException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ParseException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+        Option8Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                final CurrentlyPlayingContext currentlyPlayingContext;
+                try {
+                    currentlyPlayingContext = getInformationAboutUsersCurrentPlaybackRequest.execute();
+                    final String NPID = currentlyPlayingContext.getItem().getId();
+                    final String id = NPID;
+                    final GetTrackRequest getTrackRequest = spotifyApi.getTrack(id)
+                            .build();
+                    final Track track = getTrackRequest.execute();
+                    String CID = track.getId();
+                    final RemoveUsersSavedTracksRequest removeUsersSavedTracksRequest = spotifyApi
+                            .removeUsersSavedTracks(CID)
+                            .build();
+
+                    removeUsersSavedTracksRequest.execute();
+                    JOptionPane.showMessageDialog(null, "Current track is now removed from user's liked songs");
+
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (SpotifyWebApiException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ParseException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
     }

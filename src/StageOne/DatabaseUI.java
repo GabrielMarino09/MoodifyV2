@@ -33,11 +33,9 @@ public class DatabaseUI {
         try {
             Class.forName("org.sqlite.JDBC");
             Connection conn = DriverManager.getConnection("jdbc:sqlite:Database/Moodify.db");
-            JOptionPane.showMessageDialog(null, "Connection is successful to database!");
             return conn;
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
             return null;
         }
     }

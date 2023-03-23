@@ -1,0 +1,41 @@
+<component name="libraryTable">
+  <library name="xchart-3.8.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/xchart-3.8.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/sqlite-jdbc-3.8.7.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/pdfbox-2.0.22.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/graphics2d-0.30.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/fontbox-2.0.22.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-logging-1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/animated-gif-lib-1.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/VectorGraphics2D-0.13.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx.web.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx.swing.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx.media.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx.graphics.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx.fxml.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx.controls.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx.base.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-swt.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <NATIVE>
+      <root url="file://$PROJECT_DIR$/lib" />
+      <root url="file://$PROJECT_DIR$/lib" />
+      <root url="file://$PROJECT_DIR$/lib" />
+      <root url="file://$PROJECT_DIR$/lib" />
+      <root url="file://$PROJECT_DIR$/lib" />
+      <root url="file://$PROJECT_DIR$/lib" />
+      <root url="file://$PROJECT_DIR$/lib" />
+      <root url="file://$PROJECT_DIR$/lib" />
+      <root url="file://$PROJECT_DIR$/lib" />
+      <root url="file://$PROJECT_DIR$/lib" />
+      <root url="file://$PROJECT_DIR$/lib" />
+      <root url="file://$PROJECT_DIR$/lib" />
+      <root url="file://$PROJECT_DIR$/lib" />
+    </NATIVE>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/sqlite-jdbc-3.8.7.jar!/" />
+    </SOURCES>
+  </library>
+</component>
