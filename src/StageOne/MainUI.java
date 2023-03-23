@@ -79,6 +79,11 @@ public class MainUI {
     private JPanel DP;
     private JPanel TP;
 
+    private JFrame frame;
+
+    public JFrame getFrame() {
+        return frame;
+    }
     public static Connection dbConnector()
     {
         try {
@@ -170,6 +175,7 @@ public class MainUI {
 
 
     public MainUI() {
+        this.frame = new JFrame("Moodify");
         ImageIcon PauseIMG = new ImageIcon("/Users/gabriel/IdeaProjects/MoodifyV2/src/Images/Icons/PlayPause.png");
 
         Pause.setIcon(PauseIMG);
@@ -193,6 +199,14 @@ public class MainUI {
         Option3Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                DatabaseUI modalDB = new DatabaseUI(frame, "Moodify", true);
+                //final JDialog dialog = new JDialog(frame, "Moodify", true);
+                modalDB.getContentPane().add(modalDB.DatabaseUIPanel);
+                modalDB.setModal(true);
+                modalDB.pack();
+                modalDB.setVisible(true);
+                /*
+
                 JFrame frame = new JFrame("Moodify");
                 final Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
                 final URL imageResource = StageOne.class.getClassLoader().getResource("Images/Logo.png");
@@ -211,6 +225,7 @@ public class MainUI {
                 frame.pack();
                 frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 frame.setVisible(true);
+                 */
             }
         });
 
@@ -223,7 +238,6 @@ public class MainUI {
                 getTrack((float)MiE, (float) MaE, AnnoyedGif);
             }
         });
-
         MotivatedButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -241,7 +255,6 @@ public class MainUI {
                 getTrack((float) MiE, (float) MaE, ExcitedGif);
             }
         });
-
         HappyButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -251,7 +264,6 @@ public class MainUI {
                 getTrack((float)MiE, (float) MaE, HappyGif);
             }
         });
-
         HopefulButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -261,7 +273,6 @@ public class MainUI {
                 getTrack((float)MiE, (float) MaE, HopefulGif);
             }
         });
-
         HopelessButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -280,7 +291,6 @@ public class MainUI {
                 getTrack((float)MiE, (float) MaE, AngryGif);
             }
         });
-
         AnnoyedButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -290,7 +300,6 @@ public class MainUI {
                 getTrack((float) MiE, (float) MaE, AnnoyedGif);
             }
         });
-
         SadButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -299,7 +308,6 @@ public class MainUI {
                 getTrack((float)MiE, (float) MaE, SadGif);
             }
         });
-
         NeutralButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -374,7 +382,6 @@ public class MainUI {
                 }
             }
         });
-
         GoBack.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -639,7 +646,7 @@ public class MainUI {
 
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Moodify");
+
         final Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
         final URL imageResource = StageOne.class.getClassLoader().getResource("Images/Logo.png");
         final Image image = defaultToolkit.getImage(imageResource);
@@ -651,8 +658,10 @@ public class MainUI {
         } catch (final SecurityException e) {
             System.out.println("There was a security exception for: 'taskbar.setIconImage'");
         }
+        MainUI mainUI = new MainUI();
+        JFrame frame = mainUI.getFrame();
         frame.setIconImage(image);
-        frame.setContentPane(new MainUI().MainUI);
+        frame.setContentPane(mainUI.MainUI);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);

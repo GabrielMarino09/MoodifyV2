@@ -9,7 +9,7 @@ import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class DatabaseUI {
+public class DatabaseUI extends JDialog {
     JPanel DatabaseUIPanel;
     private JPanel DateTimePanel;
     private JLabel DayLabel;
@@ -113,7 +113,7 @@ public class DatabaseUI {
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Moodify");
-        DatabaseUI ui = new DatabaseUI();
+        DatabaseUI ui = new DatabaseUI(frame, "Moodify", true);
         Image image = getImage();
         frame.setIconImage(image);
         frame.setContentPane(ui.DatabaseUIPanel);
@@ -122,11 +122,13 @@ public class DatabaseUI {
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
-    public DatabaseUI() {
-
+    public DatabaseUI(JFrame frame, String title, boolean modal) {
+        super(frame, "Moodify", true);
         BackButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                System.out.println("Back button pressed");
+                dispose();
             }
         });
     }
