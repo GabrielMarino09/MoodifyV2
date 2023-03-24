@@ -82,6 +82,12 @@ public class MainUI {
     private JPanel DP;
     private JPanel TP;
 
+    private JFrame frame;
+
+    public JFrame getFrame() {
+        return frame;
+    }
+
     public static Connection dbConnector()
     {
         try {
@@ -171,6 +177,7 @@ public class MainUI {
 
 
     public MainUI() {
+        this.frame = new JFrame("Moodify");
         HopefulButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         HappyButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         HopelessButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -194,7 +201,6 @@ public class MainUI {
         FastForward.setCursor(new Cursor(Cursor.HAND_CURSOR));
         GoBack.setCursor(new Cursor(Cursor.HAND_CURSOR));
         Pause.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
         ImageIcon PauseIMG = new ImageIcon("/Users/gabriel/IdeaProjects/MoodifyV2/src/Images/Icons/PlayPause.png");
 
         Pause.setIcon(PauseIMG);
@@ -217,24 +223,12 @@ public class MainUI {
         Option3Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame frame = new JFrame("Moodify");
-                final Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
-                final URL imageResource = StageOne.class.getClassLoader().getResource("Images/Logo.png");
-                final Image image = defaultToolkit.getImage(imageResource);
-                final Taskbar taskbar = Taskbar.getTaskbar();
-                try {
-                    taskbar.setIconImage(image);
-                } catch (final UnsupportedOperationException a) {
-                    System.out.println("The os does not support: 'taskbar.setIconImage'");
-                } catch (final SecurityException a) {
-                    System.out.println("There was a security exception for: 'taskbar.setIconImage'");
-                }
-                frame.setIconImage(image);
-                frame.setContentPane(new DatabaseUI().DatabaseUIPanel);
-                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                frame.pack();
-                frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-                frame.setVisible(true);
+                DatabaseUI modalDB = new DatabaseUI(frame, "Moodify", true);
+                //final JDialog dialog = new JDialog(frame, "Moodify", true);
+                modalDB.getContentPane().add(modalDB.DatabaseUIPanel);
+                modalDB.setModal(true);
+                modalDB.pack();
+                modalDB.setVisible(true);
             }
         });
 
@@ -749,7 +743,7 @@ public class MainUI {
 
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Moodify");
+
         final Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
         final URL imageResource = StageOne.class.getClassLoader().getResource("Images/Logo.png");
         final Image image = defaultToolkit.getImage(imageResource);
@@ -761,8 +755,10 @@ public class MainUI {
         } catch (final SecurityException e) {
             System.out.println("There was a security exception for: 'taskbar.setIconImage'");
         }
+        MainUI mainUI = new MainUI();
+        JFrame frame = mainUI.getFrame();
         frame.setIconImage(image);
-        frame.setContentPane(new MainUI().MainUI);
+        frame.setContentPane(mainUI.MainUI);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
