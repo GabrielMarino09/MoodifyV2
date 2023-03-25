@@ -2,7 +2,6 @@ package StageOne;
 
 import TheGrid.Fetch;
 import authorization.PKCE.PKCE.AuthorizationCode;
-import authorization.PKCE.PKCE.AuthorizationCodeRefresh;
 import authorization.PKCE.PKCE.AuthorizationCodeUri;
 
 import javax.swing.*;
@@ -21,22 +20,24 @@ public class SpotifyLoginUI {
     private JPasswordField CodeTF;
     private JButton LogInButton;
     public JPanel SpotifyLoginUI;
+    private JFrame frame;
+
+    public JFrame getFrame() {
+        return frame;
+    }
 
     public static Connection dbConnector()
     {
         try {
             Class.forName("org.sqlite.JDBC");
             Connection conn=DriverManager.getConnection("jdbc:sqlite:Database/Moodify.db");
-            JOptionPane.showMessageDialog(null,"Connection is successful to database!");
             return conn;
 
         }catch(Exception e) {
-            JOptionPane.showMessageDialog(null,e);
             return null;
         }
     }
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Moodify");
+    public static void main() {
         final Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
         final URL imageResource = StageOne.class.getClassLoader().getResource("Images/Logo.png");
         final Image image = defaultToolkit.getImage(imageResource);
@@ -48,17 +49,19 @@ public class SpotifyLoginUI {
         } catch (final SecurityException e) {
             System.out.println("There was a security exception for: 'taskbar.setIconImage'");
         }
+        SpotifyLoginUI SpotifyLogin = new SpotifyLoginUI();
+        JFrame frame = SpotifyLogin.getFrame();
         frame.setIconImage(image);
-        frame.setContentPane(new SpotifyLoginUI().SpotifyLoginUI);
+        frame.setContentPane(SpotifyLogin.SpotifyLoginUI);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setVisible(true);
         AuthorizationCodeUri.authorizationCodeUri_Sync();
-
     }
 
     public SpotifyLoginUI() {
+        this.frame = new JFrame("Moodify");
         LogInButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -86,6 +89,7 @@ public class SpotifyLoginUI {
                     pst.execute();
                     pst.setString(3, AuthorizationCode.authorizationCode_Sync());
                     pst.execute();
+                    frame.dispose();
                     Fetch.Fetch();
 
                 } catch (ClassNotFoundException ex) {

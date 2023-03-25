@@ -3,6 +3,7 @@ package StageOne;
 
 import authorization.PKCE.PKCE.AuthorizationCodeRefresh;
 
+import javafx.beans.property.ReadOnlyStringPropertyBase;
 import jdk.jfr.Label;
 import org.apache.hc.core5.http.ParseException;
 import se.michaelthelin.spotify.SpotifyApi;
@@ -20,6 +21,8 @@ import se.michaelthelin.spotify.requests.data.personalization.simplified.GetUser
 import se.michaelthelin.spotify.requests.data.player.*;
 import se.michaelthelin.spotify.requests.data.playlists.GetListOfUsersPlaylistsRequest;
 import se.michaelthelin.spotify.requests.data.tracks.GetTrackRequest;
+import se.michaelthelin.spotify.requests.data.player.ToggleShuffleForUsersPlaybackRequest;
+import se.michaelthelin.spotify.requests.data.player.SetRepeatModeOnUsersPlaybackRequest;
 
 import java.awt.Cursor;
 import java.awt.event.ComponentEvent;
@@ -37,7 +40,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
-
+import java.util.Objects;
 
 
 public class MainUI {
@@ -202,6 +205,12 @@ public class MainUI {
         GoBack.setCursor(new Cursor(Cursor.HAND_CURSOR));
         Pause.setCursor(new Cursor(Cursor.HAND_CURSOR));
         ImageIcon PauseIMG = new ImageIcon("/Users/gabriel/IdeaProjects/MoodifyV2/src/Images/Icons/PlayPause.png");
+        ImageIcon ShuffleOn = new ImageIcon("/Users/gabriel/IdeaProjects/MoodifyV2/src/Images/Icons/ShuffleOn.png");
+        ImageIcon ShuffleOff = new ImageIcon("/Users/gabriel/IdeaProjects/MoodifyV2/src/Images/Icons/Shuffle.png");
+
+        ImageIcon RepeatFalse = new ImageIcon("/Users/gabriel/IdeaProjects/MoodifyV2/src/Images/Icons/Repeat.png");
+        ImageIcon RepeatCT = new ImageIcon("/Users/gabriel/IdeaProjects/MoodifyV2/src/Images/Icons/RepeatContext.png");
+        ImageIcon RepeatT = new ImageIcon("/Users/gabriel/IdeaProjects/MoodifyV2/src/Images/Icons/RepeatTrack.png");
 
         Pause.setIcon(PauseIMG);
         PlaybackPanel.setVisible(false);
@@ -215,9 +224,107 @@ public class MainUI {
         ImageIcon AnnoyedGif = new ImageIcon("/Users/gabriel/IdeaProjects/MoodifyV2/src/Images/GIFs/Annoyed.gif");
         ImageIcon NeutralGif = new ImageIcon("/Users/gabriel/IdeaProjects/MoodifyV2/src/Images/GIFs/Neutral.gif");
 
+        final GetInformationAboutUsersCurrentPlaybackRequest getInformationAboutUsersCurrentPlaybackRequest =
+                spotifyApi.getInformationAboutUsersCurrentPlayback()
+                        .build();
+
+        try {
+            final CurrentlyPlayingContext currentlyPlayingContext = getInformationAboutUsersCurrentPlaybackRequest.execute();
+                if (currentlyPlayingContext == null) {
+                    ;
+                } else{
+                    boolean Playing = currentlyPlayingContext.getIs_playing();
+                    boolean Shuffle = currentlyPlayingContext.getShuffle_state();
+                    String Repeat =  currentlyPlayingContext.getRepeat_state();
+
+                    System.out.println(Shuffle);
+                    System.out.println(Playing);
+                    System.out.println(Repeat);
+
+                    if (Shuffle == true){
+                        Option6Button.setIcon(ShuffleOn);
+                    } else{
+                        Option6Button.setIcon(ShuffleOff);
+                    }
+
+                    if (Repeat == "track") {
+                        Option9Button.setIcon(RepeatT);
+                    }
+                    if (Repeat == "context"){
+                        Option9Button.setIcon(RepeatCT);
+                    }
+                    if (Repeat == "off") {
+                        Option9Button.setIcon(RepeatFalse);
+                    }
+
+
+                    if (Playing == true){
+                        PlaybackPanel.setVisible(true);
+                        VideoLabel.setVisible(false);
+                        final String NPID = currentlyPlayingContext.getItem().getId();
+                        final String id = NPID;
+                        final GetTrackRequest getTrackRequest = spotifyApi.getTrack(id)
+                                .build();
+                        final Track track = getTrackRequest.execute();
+
+                        System.out.println("Track Name: " + track.getName());
+                        CSongNameLBL.setText(track.getName());
+                        System.out.println("Album: " + track.getAlbum().getName());
+                        CAlbumNameLBL.setText(track.getAlbum().getName());
+                        for (ArtistSimplified artist : track.getArtists()) {
+                            System.out.println("Artist: " + artist.getName());
+                            artist.getName();
+                            CArtistNameLBL.setText(artist.getName());
+                            break;
+                        }
+                        System.out.println("Artist: " + track.getArtists());
+                        System.out.println("Image: " + track.getAlbum().getImages());
+
+                        se.michaelthelin.spotify.model_objects.specification.Image[] IURL = track.getAlbum().getImages();
+                        String ImageURLBIG = String.valueOf(IURL[0].getUrl());
+                        System.out.println("Image: " + ImageURLBIG);
+                        URL getImageUrl = new URL(ImageURLBIG);
+                        BufferedImage ImageBuffer = ImageIO.read(getImageUrl);
+                        Image ResizedAlbumCover = ImageBuffer.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+                        ImageIcon IA = new ImageIcon(ResizedAlbumCover);
+                        ImageLBL.setIcon(IA);
+                        Pause.setIcon(PauseIMG);
+                    }
+                }
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (SpotifyWebApiException e) {
+            throw new RuntimeException(e);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
         Option1Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                return;
+            }
+        });
+
+        Option2Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                RecentPlaylist recentPlaylist = null;
+                try {
+                    recentPlaylist = new RecentPlaylist(frame, "Moodify", true);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ParseException ex) {
+                    throw new RuntimeException(ex);
+                } catch (SpotifyWebApiException ex) {
+                    throw new RuntimeException(ex);
+                }
+                //final JDialog dialog = new JDialog(frame, "Moodify", true);
+                recentPlaylist.getContentPane().add(recentPlaylist.RecentPlaylistPanel);
+                recentPlaylist.setModal(true);
+                recentPlaylist.pack();
+                recentPlaylist.setVisible(true);
             }
         });
         Option3Button.addActionListener(new ActionListener() {
@@ -509,15 +616,10 @@ public class MainUI {
             public void actionPerformed(ActionEvent e) {
                 MainUI.setBackground(new Color(225, 220, 210));
                 CompanyPanel.setBackground(new Color(225, 220, 210));
-                DateTimePanel.setBackground(new Color(225, 220, 210));
                 PlaybackPanel.setBackground(new Color(225, 220, 210));
                 MoodifyLogoLabel.setForeground(new Color(92, 82, 63));
                 OptionsPanel.setBackground(new Color(225, 220, 210));
-                DP.setBackground(new Color(225, 220, 210));
-                TP.setBackground(new Color(225, 220, 210));
-                DateLabel.setForeground(new Color(92, 82, 63));
-                DayLabel.setForeground(new Color(92, 82, 63));
-                TimeLabel.setForeground(new Color(92, 82, 63));
+
             }
         });
         Option4Button.addActionListener(new ActionListener() {
@@ -525,15 +627,9 @@ public class MainUI {
             public void actionPerformed(ActionEvent e) {
                     MainUI.setBackground(new Color(92, 82, 63));
                     CompanyPanel.setBackground(new Color(92, 82, 63));
-                    DateTimePanel.setBackground(new Color(92, 82, 63));
                     PlaybackPanel.setBackground(new Color(92, 82, 63));
                     MoodifyLogoLabel.setForeground(new Color(225, 220, 210));
                     OptionsPanel.setBackground(new Color(92, 82, 63));
-                    DP.setBackground(new Color(92, 82, 63));
-                    TP.setBackground(new Color(92, 82, 63));
-                    DayLabel.setForeground(new Color(225, 220, 210));
-                    DateLabel.setForeground(new Color(225, 220, 210));
-                    TimeLabel.setForeground(new Color(225, 220, 210));
             }
         });
         Option1Button.addActionListener(new ActionListener() {
@@ -542,37 +638,7 @@ public class MainUI {
                 System.exit(0);
             }
         });
-        Option2Button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFrame frame = new JFrame("Moodify");
-                final Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
-                final URL imageResource = StageOne.class.getClassLoader().getResource("Images/Logo.png");
-                final Image image = defaultToolkit.getImage(imageResource);
-                final Taskbar taskbar = Taskbar.getTaskbar();
-                try {
-                    taskbar.setIconImage(image);
-                } catch (final UnsupportedOperationException a) {
-                    System.out.println("The os does not support: 'taskbar.setIconImage'");
-                } catch (final SecurityException a) {
-                    System.out.println("There was a security exception for: 'taskbar.setIconImage'");
-                }
-                frame.setIconImage(image);
-                try {
-                    frame.setContentPane(new RecentPlaylist().RecentPlaylistPanel);
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                } catch (ParseException ex) {
-                    throw new RuntimeException(ex);
-                } catch (SpotifyWebApiException ex) {
-                    throw new RuntimeException(ex);
-                }
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.pack();
-                frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-                frame.setVisible(true);
-            }
-        });
+
         Option7Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -626,6 +692,89 @@ public class MainUI {
                 } catch (ParseException ex) {
                     throw new RuntimeException(ex);
                 }
+            }
+        });
+        Option6Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    final GetInformationAboutUsersCurrentPlaybackRequest getInformationAboutUsersCurrentPlaybackRequest =
+                            spotifyApi.getInformationAboutUsersCurrentPlayback()
+                                    .build();
+                    final CurrentlyPlayingContext currentlyPlayingContext = getInformationAboutUsersCurrentPlaybackRequest.execute();
+
+                    boolean Shuffle = currentlyPlayingContext.getShuffle_state();
+                    System.out.println(Shuffle);
+
+                    final ToggleShuffleForUsersPlaybackRequest toggleShuffleForUsersPlaybackRequest;
+
+                    if (Shuffle == false){
+                        toggleShuffleForUsersPlaybackRequest = spotifyApi
+                                .toggleShuffleForUsersPlayback(true)
+                                .build();
+                        toggleShuffleForUsersPlaybackRequest.execute();
+                        Option6Button.setIcon(ShuffleOn);
+
+                    } else{
+                        toggleShuffleForUsersPlaybackRequest = spotifyApi
+                                .toggleShuffleForUsersPlayback(false)
+                                .build();
+                        toggleShuffleForUsersPlaybackRequest.execute();
+                        Option6Button.setIcon(ShuffleOff);
+                    }
+                    System.out.println(Shuffle);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ParseException ex) {
+                    throw new RuntimeException(ex);
+                } catch (SpotifyWebApiException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+        Option9Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    final GetInformationAboutUsersCurrentPlaybackRequest getInformationAboutUsersCurrentPlaybackRequest =
+                            spotifyApi.getInformationAboutUsersCurrentPlayback()
+                                    .build();
+                    final CurrentlyPlayingContext currentlyPlayingContext;
+                    currentlyPlayingContext = getInformationAboutUsersCurrentPlaybackRequest.execute();
+                    String Repeat = currentlyPlayingContext.getRepeat_state();
+                    System.out.println(Repeat);
+
+                    if (Objects.equals(Repeat, "off")) {
+                        final SetRepeatModeOnUsersPlaybackRequest setRepeatModeOnUsersPlaybackRequest = spotifyApi
+                                .setRepeatModeOnUsersPlayback("context")
+                                .build();
+                        setRepeatModeOnUsersPlaybackRequest.execute();
+                        Option9Button.setIcon(RepeatCT);
+                    }
+                    if (Objects.equals(Repeat, "context")) {
+                        final SetRepeatModeOnUsersPlaybackRequest setRepeatModeOnUsersPlaybackRequest = spotifyApi
+                                .setRepeatModeOnUsersPlayback("track")
+                                .build();
+                        setRepeatModeOnUsersPlaybackRequest.execute();
+                        Option9Button.setIcon(RepeatT);
+                    }
+                    if (Objects.equals(Repeat, "track")) {
+                        final SetRepeatModeOnUsersPlaybackRequest setRepeatModeOnUsersPlaybackRequest = spotifyApi
+                                .setRepeatModeOnUsersPlayback("off")
+                                .build();
+                        setRepeatModeOnUsersPlaybackRequest.execute();
+                        Option9Button.setIcon(RepeatFalse);
+                    }
+
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (SpotifyWebApiException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ParseException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+
             }
         });
     }

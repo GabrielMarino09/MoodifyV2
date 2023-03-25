@@ -20,7 +20,7 @@ public class AuthorizationCodeUri {
     private static final String clientSecret = "a69d39607db842f788821dbb92e88c27";
 
     //URI to be redirected after User authorizes application
-    private static final URI redirectUri = SpotifyHttpManager.makeUri("https://www.greengates.edu.mx/");
+    private static final URI redirectUri = SpotifyHttpManager.makeUri("https://sites.google.com/greengates.edu.mx/moodify-music/home");
 
     //Sets all the information that will be used by Spotify to generate an authorization page
     private static final SpotifyApi spotifyApi = new SpotifyApi.Builder()

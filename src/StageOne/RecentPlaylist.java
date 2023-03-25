@@ -51,12 +51,8 @@ import java.util.ArrayList;
 
 import static StageOne.MainUI.GGID;
 
-public class RecentPlaylist {
+public class RecentPlaylist extends JDialog {
     public JPanel RecentPlaylistPanel;
-    private JPanel DateTimePanel;
-    private JLabel DayLabel;
-    private JLabel DateLabel;
-    private JLabel TimeLabel;
     private JPanel CompanyPanel;
     private JLabel MoodifyLogoLabel;
     private JPanel ListNamePanel;
@@ -74,6 +70,7 @@ public class RecentPlaylist {
     private JButton MP3;
     private JButton MP4;
     private JButton MP5;
+    private JPanel RP;
 
     private static final String userId = GGID();
 
@@ -114,7 +111,8 @@ public class RecentPlaylist {
             .time_range("short_term")
             .build();
 
-    public RecentPlaylist() throws IOException, ParseException, SpotifyWebApiException {
+    public RecentPlaylist(JFrame frame, String title, boolean modal) throws IOException, ParseException, SpotifyWebApiException {
+        super(frame, "Moodify", true);
         final Paging<se.michaelthelin.spotify.model_objects.specification.Track> trackPaging = getUsersTopTracksRequest.execute();
 
         System.out.println("Total: " + trackPaging.getTotal());
@@ -131,10 +129,24 @@ public class RecentPlaylist {
         }
         final GetTrackRequest getTrackRequestT1 = spotifyApi.getTrack(TLAR.get(int_random0))
                 .build();
-        final Track track;
+        final Track track1;
         try {
-            track = getTrackRequestT1.execute();
-            se.michaelthelin.spotify.model_objects.specification.Image[] IURL = track.getAlbum().getImages();
+            track1 = getTrackRequestT1.execute();
+            se.michaelthelin.spotify.model_objects.specification.ExternalUrl[] TR = new ExternalUrl[]{track1.getExternalUrls()};
+            String TURL = (TR[0].getExternalUrls()).toString();
+            String PTURL = TURL.replace("{spotify=","");
+            String FTURL = PTURL.replace("}","");
+            RR1.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        Desktop.getDesktop().browse(URI.create(FTURL));
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            });
+            se.michaelthelin.spotify.model_objects.specification.Image[] IURL = track1.getAlbum().getImages();
             String ImageURLBIG = String.valueOf(IURL[0].getUrl());
             System.out.println("Image: " + ImageURLBIG);
             URL getImageUrl = new URL(ImageURLBIG);
@@ -143,13 +155,6 @@ public class RecentPlaylist {
             ImageIcon IA = new ImageIcon(ResizedAlbumCover);
             RR1.setIcon(IA);
             RR1.setCursor(new Cursor(Cursor.HAND_CURSOR));
-            RR1.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                  //Desktop.getDesktop().browse(URI.create(trackURLRR1));
-
-                }
-            });
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (SpotifyWebApiException e) {
@@ -169,6 +174,20 @@ public class RecentPlaylist {
         final Track track2;
         try {
             track2 = getTrackRequestT2.execute();
+            se.michaelthelin.spotify.model_objects.specification.ExternalUrl[] TR = new ExternalUrl[]{track2.getExternalUrls()};
+            String TURL = (TR[0].getExternalUrls()).toString();
+            String PTURL = TURL.replace("{spotify=","");
+            String FTURL = PTURL.replace("}","");
+            RR2.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        Desktop.getDesktop().browse(URI.create(FTURL));
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            });
             se.michaelthelin.spotify.model_objects.specification.Image[] IURL = track2.getAlbum().getImages();
             String ImageURLBIG = String.valueOf(IURL[0].getUrl());
             System.out.println("Image: " + ImageURLBIG);
@@ -196,6 +215,20 @@ public class RecentPlaylist {
         final Track track3;
         try {
             track3 = getTrackRequestT3.execute();
+            se.michaelthelin.spotify.model_objects.specification.ExternalUrl[] TR = new ExternalUrl[]{track3.getExternalUrls()};
+            String TURL = (TR[0].getExternalUrls()).toString();
+            String PTURL = TURL.replace("{spotify=","");
+            String FTURL = PTURL.replace("}","");
+            RR3.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        Desktop.getDesktop().browse(URI.create(FTURL));
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            });
             se.michaelthelin.spotify.model_objects.specification.Image[] IURL = track3.getAlbum().getImages();
             String ImageURLBIG = String.valueOf(IURL[0].getUrl());
             System.out.println("Image: " + ImageURLBIG);
@@ -221,6 +254,20 @@ public class RecentPlaylist {
         final Track track4;
         try {
             track4 = getTrackRequestT4.execute();
+            se.michaelthelin.spotify.model_objects.specification.ExternalUrl[] TR = new ExternalUrl[]{track4.getExternalUrls()};
+            String TURL = (TR[0].getExternalUrls()).toString();
+            String PTURL = TURL.replace("{spotify=","");
+            String FTURL = PTURL.replace("}","");
+            RR4.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        Desktop.getDesktop().browse(URI.create(FTURL));
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            });
             se.michaelthelin.spotify.model_objects.specification.Image[] IURL = track4.getAlbum().getImages();
             String ImageURLBIG = String.valueOf(IURL[0].getUrl());
             System.out.println("Image: " + ImageURLBIG);
@@ -247,6 +294,20 @@ public class RecentPlaylist {
         final Track track5;
         try {
             track5 = getTrackRequestT5.execute();
+            se.michaelthelin.spotify.model_objects.specification.ExternalUrl[] TR = new ExternalUrl[]{track5.getExternalUrls()};
+            String TURL = (TR[0].getExternalUrls()).toString();
+            String PTURL = TURL.replace("{spotify=","");
+            String FTURL = PTURL.replace("}","");
+            RR5.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        Desktop.getDesktop().browse(URI.create(FTURL));
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            });
             se.michaelthelin.spotify.model_objects.specification.Image[] IURL = track5.getAlbum().getImages();
             String ImageURLBIG = String.valueOf(IURL[0].getUrl());
             System.out.println("Image: " + ImageURLBIG);
@@ -303,6 +364,21 @@ public class RecentPlaylist {
 
 
             System.out.println("-------------------------------------------------------------------------------------");
+            se.michaelthelin.spotify.model_objects.specification.ExternalUrl[] AMP1 = new ExternalUrl[]{ArtistName[int_random01].getExternalUrls()};
+            String AURLMP1 = (AMP1[0].getExternalUrls()).toString();
+            String PAURLMP1 = AURLMP1.replace("{spotify=","");
+            String FAURLMP1 = PAURLMP1.replace("}","");
+            MP1.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        Desktop.getDesktop().browse(URI.create(FAURLMP1));
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            });
+            System.out.println("AMP1 URL: " + FAURLMP1);
             se.michaelthelin.spotify.model_objects.specification.Image[] IURL = ArtistName[int_random01].getImages();
             String ImageURLBIG = String.valueOf(IURL[0].getUrl());
             System.out.println("Image: " + ImageURLBIG);
@@ -313,6 +389,22 @@ public class RecentPlaylist {
             MP1.setIcon(IA);
             MP1.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
+
+            se.michaelthelin.spotify.model_objects.specification.ExternalUrl[] AMP3 = new ExternalUrl[]{ArtistName[int_random02].getExternalUrls()};
+            String AURLMP3 = (AMP3[0].getExternalUrls()).toString();
+            String PAURLMP3 = AURLMP3.replace("{spotify=","");
+            String FAURLMP3 = PAURLMP3.replace("}","");
+            MP3.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        Desktop.getDesktop().browse(URI.create(FAURLMP3));
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            });
+            System.out.println("AMP3 URL: " + FAURLMP3);
 
             IURL = ArtistName[int_random02].getImages();
             String ImageURLBIG2 = String.valueOf(IURL[0].getUrl());
@@ -326,6 +418,22 @@ public class RecentPlaylist {
 
 
 
+            se.michaelthelin.spotify.model_objects.specification.ExternalUrl[] AMP4 = new ExternalUrl[]{ArtistName[int_random03].getExternalUrls()};
+            String AURLMP4 = (AMP4[0].getExternalUrls()).toString();
+            String PAURLMP4 = AURLMP4.replace("{spotify=","");
+            String FAURLMP4 = PAURLMP4.replace("}","");
+            MP4.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        Desktop.getDesktop().browse(URI.create(FAURLMP4));
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            });
+            System.out.println("AMP4 URL: " + FAURLMP4);
+
             IURL = ArtistName[int_random03].getImages();
             String ImageURLBIG3 = String.valueOf(IURL[0].getUrl());
             System.out.println("Image: " + ImageURLBIG3);
@@ -336,7 +444,21 @@ public class RecentPlaylist {
             MP4.setIcon(IA3);
             MP4.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-
+            se.michaelthelin.spotify.model_objects.specification.ExternalUrl[] AMP2 = new ExternalUrl[]{ArtistName[int_random04].getExternalUrls()};
+            String AURL = (AMP2[0].getExternalUrls()).toString();
+            String PAURL = AURL.replace("{spotify=","");
+            String FAURL = PAURL.replace("}","");
+            MP2.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        Desktop.getDesktop().browse(URI.create(FAURL));
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            });
+            System.out.println("AMP2 URL: " + FAURL);
             IURL = ArtistName[int_random04].getImages();
             String ImageURLBIG4 = String.valueOf(IURL[0].getUrl());
             System.out.println("Image: " + ImageURLBIG4);
@@ -347,7 +469,21 @@ public class RecentPlaylist {
             MP2.setIcon(IA4);
             MP2.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-
+            se.michaelthelin.spotify.model_objects.specification.ExternalUrl[] AMP5 = new ExternalUrl[]{ArtistName[int_random05].getExternalUrls()};
+            String AURLMP5 = (AMP5[0].getExternalUrls()).toString();
+            String PAURLMP5 = AURLMP5.replace("{spotify=","");
+            String FAURLMP5 = PAURLMP5.replace("}","");
+            MP5.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        Desktop.getDesktop().browse(URI.create(FAURLMP5));
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            });
+            System.out.println("AMP5 URL: " + FAURL);
             IURL = ArtistName[int_random05].getImages();
             String ImageURLBIG5 = String.valueOf(IURL[0].getUrl());
             System.out.println("Image: " + ImageURLBIG5);
@@ -360,13 +496,30 @@ public class RecentPlaylist {
             MP5.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
 
+            BackButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println("Back button pressed");
+                    dispose();
+                }
+            });
         }catch (IOException e) {
             throw new RuntimeException(e);
         }
+
     }
 
         public static void main(String[] args) throws IOException, ParseException, SpotifyWebApiException {
-        JFrame frame = new JFrame("Moodify");
+            JFrame frame = new JFrame("Moodify");
+            RecentPlaylist ui = new RecentPlaylist(frame, "Moodify", true);
+            Image image = getImage();
+            frame.setIconImage(image);
+            frame.setContentPane(ui.RP);
+            frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            frame.pack();
+        }
+    private static Image getImage() {
         final Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
         final URL imageResource = StageOne.class.getClassLoader().getResource("Images/Logo.png");
         final Image image = defaultToolkit.getImage(imageResource);
@@ -378,12 +531,7 @@ public class RecentPlaylist {
         } catch (final SecurityException e) {
             System.out.println("There was a security exception for: 'taskbar.setIconImage'");
         }
-        frame.setIconImage(image);
-        frame.setContentPane(new RecentPlaylist().RecentPlaylistPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        frame.setVisible(true);
+        return image;
     }
 
     private void createUIComponents() {

@@ -3,7 +3,6 @@ import authorization.PKCE.PKCE.AuthorizationCodeRefresh;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Side;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.PieChart.Data;
@@ -12,21 +11,13 @@ import javafx.stage.Stage;
 import se.michaelthelin.spotify.SpotifyApi;
 import se.michaelthelin.spotify.enums.ModelObjectType;
 import se.michaelthelin.spotify.exceptions.SpotifyWebApiException;
-import se.michaelthelin.spotify.model_objects.specification.Paging;
-import se.michaelthelin.spotify.model_objects.specification.Track;
-import se.michaelthelin.spotify.model_objects.specification.User;
-import se.michaelthelin.spotify.requests.data.personalization.GetUsersTopArtistsAndTracksRequest;
-import se.michaelthelin.spotify.requests.data.personalization.interfaces.IArtistTrackModelObject;
+import se.michaelthelin.spotify.model_objects.specification.*;
+import se.michaelthelin.spotify.requests.data.follow.GetUsersFollowedArtistsRequest;
 import se.michaelthelin.spotify.requests.data.personalization.simplified.GetUsersTopTracksRequest;
-import se.michaelthelin.spotify.requests.data.users_profile.GetUsersProfileRequest;
 import org.apache.hc.core5.http.ParseException;
 
 import java.io.IOException;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.concurrent.CancellationException;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CompletionException;
 
 public class PieChartSample extends Application{
     public static Connection dbConnector()
@@ -65,16 +56,13 @@ public class PieChartSample extends Application{
     private static final SpotifyApi spotifyApi = new SpotifyApi.Builder()
             .setAccessToken(accessToken)
             .build();
-    private static final GetUsersTopTracksRequest getUsersTopTracksRequest = spotifyApi.getUsersTopTracks()
-            .limit(10)
-//          .offset(0)
-            .time_range("long_term")
+    private static final GetUsersFollowedArtistsRequest getUsersFollowedArtistsRequest = spotifyApi
+            .getUsersFollowedArtists(type)
             .build();
 
 
     public PieChartSample() throws IOException, ParseException, SpotifyWebApiException {
     }
-
         public static void main(String[] args) {
             launch(args);
         }
@@ -87,7 +75,7 @@ public class PieChartSample extends Application{
             //Instantiating the pie-chart class
             PieChart piechart = new PieChart();
 
-//setting the data of the pie chart.
+            //setting the data of the pie chart.
             piechart.setData(getChartData());
 
             //Creating Layout
@@ -105,11 +93,24 @@ public class PieChartSample extends Application{
         }
         //creating getChartData method to set the chart data
         private ObservableList<Data> getChartData() {
+            System.out.println("-------------------------------------------------------------------------------------");
+            final PagingCursorbased<Artist> artistPagingCursorbased;
+            try {
+                artistPagingCursorbased = getUsersFollowedArtistsRequest.execute();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (SpotifyWebApiException e) {
+                throw new RuntimeException(e);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
             ObservableList<Data> list = FXCollections.observableArrayList();
-            list.addAll(new PieChart.Data("Slice 1", 45),
-                    new PieChart.Data("Slice 2", 10),
-                    new PieChart.Data("Slice 3", 15),
-                    new PieChart.Data("Slice 4", 30));
+            Artist[] ArtistName = artistPagingCursorbased.getItems();
+            System.out.println("Artists Found: " + ArtistName.length);
+            System.out.println("-------------------------------------------------------------------------------------");
+            for (int i = 0; i < ArtistName.length; i++) {
+                list.addAll(new PieChart.Data(ArtistName[i].getGenres().toString(), 1));
+            }
             return list;
         }
     }

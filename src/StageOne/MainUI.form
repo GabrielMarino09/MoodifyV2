@@ -71,61 +71,7 @@
               <contentAreaFilled value="false"/>
               <font name="Felix Titling" size="24"/>
               <foreground color="-10726849"/>
-              <icon value="Images/Icons/PieChartIcon.png"/>
-              <maximumSize width="44" height="44"/>
-              <minimumSize width="44" height="44"/>
-              <preferredSize width="44" height="44"/>
-              <text value=""/>
-            </properties>
-          </component>
-          <component id="937a0" class="javax.swing.JButton" binding="Option7Button">
-            <constraints>
-              <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag top="0" left="25" bottom="0" right="75" weightx="1.0" weighty="1.0"/>
-            </constraints>
-            <properties>
-              <background color="-4674410"/>
-              <borderPainted value="true"/>
-              <contentAreaFilled value="false"/>
-              <font name="Felix Titling" size="24"/>
-              <foreground color="-10726849"/>
-              <icon value="Images/Icons/Add.png"/>
-              <maximumSize width="44" height="44"/>
-              <minimumSize width="44" height="44"/>
-              <preferredSize width="44" height="44"/>
-              <text value=""/>
-            </properties>
-          </component>
-          <component id="83d10" class="javax.swing.JButton" binding="Option8Button">
-            <constraints>
-              <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag top="0" left="25" bottom="0" right="75" weightx="1.0" weighty="1.0"/>
-            </constraints>
-            <properties>
-              <background color="-4674410"/>
-              <borderPainted value="true"/>
-              <contentAreaFilled value="false"/>
-              <font name="Felix Titling" size="24"/>
-              <foreground color="-10726849"/>
-              <icon value="Images/Icons/Remove.png"/>
-              <maximumSize width="44" height="44"/>
-              <minimumSize width="44" height="44"/>
-              <preferredSize width="44" height="44"/>
-              <text value=""/>
-            </properties>
-          </component>
-          <component id="622ab" class="javax.swing.JButton" binding="Option9Button">
-            <constraints>
-              <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag top="0" left="25" bottom="50" right="75" weightx="1.0" weighty="1.0"/>
-            </constraints>
-            <properties>
-              <background color="-4674410"/>
-              <borderPainted value="true"/>
-              <contentAreaFilled value="false"/>
-              <font name="Felix Titling" size="24"/>
-              <foreground color="-10726849"/>
-              <icon value="Images/Icons/ThumbsUp.png"/>
+              <icon value="Images/Icons/Shuffle.png"/>
               <maximumSize width="44" height="44"/>
               <minimumSize width="44" height="44"/>
               <preferredSize width="44" height="44"/>
@@ -300,77 +246,60 @@
               <text value="Neutral"/>
             </properties>
           </component>
-        </children>
-      </grid>
-      <grid id="6bf87" binding="DateTimePanel" layout-manager="GridBagLayout">
-        <constraints>
-          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <background color="-1975086"/>
-        </properties>
-        <border type="none"/>
-        <children>
-          <grid id="f32a8" binding="DP" layout-manager="GridBagLayout">
+          <component id="83d10" class="javax.swing.JButton" binding="Option8Button">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag top="0" left="125" bottom="0" right="0" weightx="0.0" weighty="0.0" ipadx="100" ipady="100"/>
+              <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag top="0" left="25" bottom="50" right="75" weightx="1.0" weighty="1.0"/>
             </constraints>
             <properties>
-              <background color="-1975086"/>
+              <background color="-4674410"/>
+              <borderPainted value="true"/>
+              <contentAreaFilled value="false"/>
+              <font name="Felix Titling" size="24"/>
+              <foreground color="-10726849"/>
+              <icon value="Images/Icons/Remove.png"/>
+              <maximumSize width="44" height="44"/>
+              <minimumSize width="44" height="44"/>
+              <preferredSize width="44" height="44"/>
+              <text value=""/>
             </properties>
-            <border type="none"/>
-            <children>
-              <component id="b36d6" class="javax.swing.JLabel" binding="DayLabel">
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-                  <gridbag weightx="1.0" weighty="1.0"/>
-                </constraints>
-                <properties>
-                  <background color="-1975086"/>
-                  <font name="Felix Titling" size="24"/>
-                  <foreground color="-10726849"/>
-                  <text value="Monday"/>
-                </properties>
-              </component>
-              <component id="fbbb1" class="javax.swing.JLabel" binding="DateLabel">
-                <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-                  <gridbag weightx="1.0" weighty="1.0"/>
-                </constraints>
-                <properties>
-                  <background color="-1975086"/>
-                  <font name="Felix Titling" size="24"/>
-                  <foreground color="-10726849"/>
-                  <text value="04/07/2022"/>
-                </properties>
-              </component>
-            </children>
-          </grid>
-          <grid id="10b76" binding="TP" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="0" bottom="0" right="0"/>
+          </component>
+          <component id="937a0" class="javax.swing.JButton" binding="Option7Button">
             <constraints>
-              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-              <gridbag top="0" left="0" bottom="0" right="25" weightx="0.0" weighty="0.0" ipadx="125"/>
+              <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag top="0" left="25" bottom="0" right="75" weightx="1.0" weighty="1.0"/>
             </constraints>
             <properties>
-              <background color="-1975086"/>
+              <background color="-4674410"/>
+              <borderPainted value="true"/>
+              <contentAreaFilled value="false"/>
+              <font name="Felix Titling" size="24"/>
+              <foreground color="-10726849"/>
+              <icon value="Images/Icons/Add.png"/>
+              <maximumSize width="44" height="44"/>
+              <minimumSize width="44" height="44"/>
+              <preferredSize width="44" height="44"/>
+              <text value=""/>
             </properties>
-            <border type="none"/>
-            <children>
-              <component id="acbca" class="javax.swing.JLabel" binding="TimeLabel">
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <background color="-1975086"/>
-                  <font name="Felix Titling" size="36"/>
-                  <foreground color="-10726849"/>
-                  <text value="12:34"/>
-                </properties>
-              </component>
-            </children>
-          </grid>
+          </component>
+          <component id="ebe72" class="javax.swing.JButton" binding="Option9Button">
+            <constraints>
+              <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag top="0" left="25" bottom="0" right="75" weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties>
+              <background color="-4674410"/>
+              <borderPainted value="true"/>
+              <contentAreaFilled value="false"/>
+              <font name="Felix Titling" size="24"/>
+              <foreground color="-10726849"/>
+              <icon value="Images/Icons/Repeat.png"/>
+              <maximumSize width="44" height="44"/>
+              <minimumSize width="44" height="44"/>
+              <preferredSize width="44" height="44"/>
+              <text value=""/>
+            </properties>
+          </component>
         </children>
       </grid>
       <grid id="55bd2" binding="CompanyPanel" layout-manager="GridBagLayout">

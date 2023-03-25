@@ -11,10 +11,6 @@ import java.util.ArrayList;
 
 public class DatabaseUI extends JDialog {
     JPanel DatabaseUIPanel;
-    private JPanel DateTimePanel;
-    private JLabel DayLabel;
-    private JLabel DateLabel;
-    private JLabel TimeLabel;
     private JPanel CompanyPanel;
     private JLabel MoodifyLogoLabel;
     private JPanel ListNamePanel;
@@ -115,9 +111,9 @@ public class DatabaseUI extends JDialog {
         Image image = getImage();
         frame.setIconImage(image);
         frame.setContentPane(ui.DatabaseUIPanel);
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.pack();
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     public DatabaseUI(JFrame frame, String title, boolean modal) {

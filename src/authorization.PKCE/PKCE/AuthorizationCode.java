@@ -25,7 +25,7 @@ public class AuthorizationCode extends AuthorizationCodeUri {
     private static final String clientSecret = "a69d39607db842f788821dbb92e88c27";
 
     //URI to be redirected after User authorizes application
-    private static final URI redirectUri = SpotifyHttpManager.makeUri("https://www.greengates.edu.mx/");
+    private static final URI redirectUri = SpotifyHttpManager.makeUri("https://sites.google.com/greengates.edu.mx/moodify-music/home");
 
     //Code retrieved from the redirected URL
     private static final String code = GetCode.GCode();

@@ -197,7 +197,6 @@ public class Fetch {
                 System.out.println("To Be Tested");
                 System.out.println();
                 System.out.println();
-
             }
 
             Class.forName("org.sqlite.JDBC");
