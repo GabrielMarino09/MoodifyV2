@@ -71,6 +71,11 @@ public class RecentPlaylist extends JDialog {
     private JButton MP4;
     private JButton MP5;
     private JPanel RP;
+    private JLabel RRLABEL1;
+    private JLabel RRLABEL2;
+    private JLabel RRLABEL3;
+    private JLabel RRLABEL4;
+    private JLabel RRLABEL5;
 
     private static final String userId = GGID();
 
@@ -115,8 +120,6 @@ public class RecentPlaylist extends JDialog {
         super(frame, "Moodify", true);
         final Paging<se.michaelthelin.spotify.model_objects.specification.Track> trackPaging = getUsersTopTracksRequest.execute();
 
-        System.out.println("Total: " + trackPaging.getTotal());
-
         final Paging<se.michaelthelin.spotify.model_objects.specification.Track> Tracklist = getUsersTopTracksRequest.execute();
         int max1= 19, min1=0;
 
@@ -148,7 +151,6 @@ public class RecentPlaylist extends JDialog {
             });
             se.michaelthelin.spotify.model_objects.specification.Image[] IURL = track1.getAlbum().getImages();
             String ImageURLBIG = String.valueOf(IURL[0].getUrl());
-            System.out.println("Image: " + ImageURLBIG);
             URL getImageUrl = new URL(ImageURLBIG);
             BufferedImage ImageBuffer = ImageIO.read(getImageUrl);
             Image ResizedAlbumCover = ImageBuffer.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
@@ -190,7 +192,6 @@ public class RecentPlaylist extends JDialog {
             });
             se.michaelthelin.spotify.model_objects.specification.Image[] IURL = track2.getAlbum().getImages();
             String ImageURLBIG = String.valueOf(IURL[0].getUrl());
-            System.out.println("Image: " + ImageURLBIG);
             URL getImageUrl = new URL(ImageURLBIG);
             BufferedImage ImageBuffer = ImageIO.read(getImageUrl);
             Image ResizedAlbumCover = ImageBuffer.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
@@ -231,7 +232,6 @@ public class RecentPlaylist extends JDialog {
             });
             se.michaelthelin.spotify.model_objects.specification.Image[] IURL = track3.getAlbum().getImages();
             String ImageURLBIG = String.valueOf(IURL[0].getUrl());
-            System.out.println("Image: " + ImageURLBIG);
             URL getImageUrl = new URL(ImageURLBIG);
             BufferedImage ImageBuffer = ImageIO.read(getImageUrl);
             Image ResizedAlbumCover = ImageBuffer.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
@@ -270,7 +270,6 @@ public class RecentPlaylist extends JDialog {
             });
             se.michaelthelin.spotify.model_objects.specification.Image[] IURL = track4.getAlbum().getImages();
             String ImageURLBIG = String.valueOf(IURL[0].getUrl());
-            System.out.println("Image: " + ImageURLBIG);
             URL getImageUrl = new URL(ImageURLBIG);
             BufferedImage ImageBuffer = ImageIO.read(getImageUrl);
             Image ResizedAlbumCover = ImageBuffer.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
@@ -310,7 +309,6 @@ public class RecentPlaylist extends JDialog {
             });
             se.michaelthelin.spotify.model_objects.specification.Image[] IURL = track5.getAlbum().getImages();
             String ImageURLBIG = String.valueOf(IURL[0].getUrl());
-            System.out.println("Image: " + ImageURLBIG);
             URL getImageUrl = new URL(ImageURLBIG);
             BufferedImage ImageBuffer = ImageIO.read(getImageUrl);
             Image ResizedAlbumCover = ImageBuffer.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
@@ -333,7 +331,6 @@ public class RecentPlaylist extends JDialog {
         final PagingCursorbased<Artist> artistPagingCursorbased = getUsersFollowedArtistsRequest.execute();
         try {
             Artist[] ArtistName = artistPagingCursorbased.getItems();
-            System.out.println("Artists Found: " + ArtistName.length);
             int max= ArtistName.length-1, min=0;
 
             int int_random01 = (min + (int)(Math.random() * ((max - min) + 1)));
@@ -378,10 +375,8 @@ public class RecentPlaylist extends JDialog {
                     }
                 }
             });
-            System.out.println("AMP1 URL: " + FAURLMP1);
             se.michaelthelin.spotify.model_objects.specification.Image[] IURL = ArtistName[int_random01].getImages();
             String ImageURLBIG = String.valueOf(IURL[0].getUrl());
-            System.out.println("Image: " + ImageURLBIG);
             URL getImageUrl = new URL(ImageURLBIG);
             BufferedImage ImageBuffer = ImageIO.read(getImageUrl);
             Image ResizedAlbumCover = ImageBuffer.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
@@ -404,11 +399,9 @@ public class RecentPlaylist extends JDialog {
                     }
                 }
             });
-            System.out.println("AMP3 URL: " + FAURLMP3);
 
             IURL = ArtistName[int_random02].getImages();
             String ImageURLBIG2 = String.valueOf(IURL[0].getUrl());
-            System.out.println("Image: " + ImageURLBIG2);
             URL getImageUrl2 = new URL(ImageURLBIG2);
             BufferedImage ImageBuffer2 = ImageIO.read(getImageUrl2);
             Image ResizedAlbumCover2 = ImageBuffer2.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
@@ -432,11 +425,9 @@ public class RecentPlaylist extends JDialog {
                     }
                 }
             });
-            System.out.println("AMP4 URL: " + FAURLMP4);
 
             IURL = ArtistName[int_random03].getImages();
             String ImageURLBIG3 = String.valueOf(IURL[0].getUrl());
-            System.out.println("Image: " + ImageURLBIG3);
             URL getImageUrl3 = new URL(ImageURLBIG3);
             BufferedImage ImageBuffer3 = ImageIO.read(getImageUrl3);
             Image ResizedAlbumCover3 = ImageBuffer3.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
@@ -458,10 +449,8 @@ public class RecentPlaylist extends JDialog {
                     }
                 }
             });
-            System.out.println("AMP2 URL: " + FAURL);
             IURL = ArtistName[int_random04].getImages();
             String ImageURLBIG4 = String.valueOf(IURL[0].getUrl());
-            System.out.println("Image: " + ImageURLBIG4);
             URL getImageUrl4 = new URL(ImageURLBIG4);
             BufferedImage ImageBuffer4 = ImageIO.read(getImageUrl4);
             Image ResizedAlbumCover4 = ImageBuffer4.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
@@ -483,10 +472,8 @@ public class RecentPlaylist extends JDialog {
                     }
                 }
             });
-            System.out.println("AMP5 URL: " + FAURL);
             IURL = ArtistName[int_random05].getImages();
             String ImageURLBIG5 = String.valueOf(IURL[0].getUrl());
-            System.out.println("Image: " + ImageURLBIG5);
             URL getImageUrl5 = new URL(ImageURLBIG5);
             BufferedImage ImageBuffer5 = ImageIO.read(getImageUrl5);
             Image ResizedAlbumCover5 = ImageBuffer5.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
@@ -499,7 +486,6 @@ public class RecentPlaylist extends JDialog {
             BackButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("Back button pressed");
                     dispose();
                 }
             });

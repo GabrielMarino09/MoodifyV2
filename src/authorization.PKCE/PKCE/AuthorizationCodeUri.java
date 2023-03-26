@@ -42,7 +42,6 @@ public class AuthorizationCodeUri {
     //Retrieves the URI from Spotify generating a link
     public static void authorizationCodeUri_Sync() {
         final URI uri = authorizationCodeUriRequest.execute();
-        System.out.println("URI: " + uri.toString());
         String URISearch = String.valueOf(uri);
         try {
             java.awt.Desktop.getDesktop().browse(URI.create(URISearch));

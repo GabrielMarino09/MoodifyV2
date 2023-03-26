@@ -10,11 +10,9 @@ public class GetCode {
         try {
             Class.forName("org.sqlite.JDBC");
             Connection conn = DriverManager.getConnection("jdbc:sqlite:Database/Moodify.db");
-            JOptionPane.showMessageDialog(null, "Connection is successful to database!");
             return conn;
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
             return null;
         }
     }
@@ -29,7 +27,6 @@ public class GetCode {
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
                 Code = rs.getString(2);
-                System.out.println("GCode:" + Code);
             }
             return Code;
         }
@@ -48,7 +45,6 @@ public class GetCode {
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
                 Code = rs.getString(3);
-                System.out.println("RT:" + Code);
             }
             return Code;
         }

@@ -1,11 +1,10 @@
-
+//Main UI is a part of the package named StageOne.
 package StageOne;
 
+//Imports authorization.PKCE.PKCE.AuthorizationCodeRefresh, so it can make requests to the Spotify API by using the refresh token.
 import authorization.PKCE.PKCE.AuthorizationCodeRefresh;
 
-import javafx.beans.property.ReadOnlyStringPropertyBase;
-import jdk.jfr.Label;
-import org.apache.hc.core5.http.ParseException;
+//Imports the necessary libraries to connect to the Spotify API. This API was developed by Michael Thelin and maintained by Jonas Thelemann.
 import se.michaelthelin.spotify.SpotifyApi;
 import se.michaelthelin.spotify.enums.ModelObjectType;
 import se.michaelthelin.spotify.exceptions.SpotifyWebApiException;
@@ -24,17 +23,15 @@ import se.michaelthelin.spotify.requests.data.tracks.GetTrackRequest;
 import se.michaelthelin.spotify.requests.data.player.ToggleShuffleForUsersPlaybackRequest;
 import se.michaelthelin.spotify.requests.data.player.SetRepeatModeOnUsersPlaybackRequest;
 
+//Imports all the other necessary libraries to for MainUI.
+import org.apache.hc.core5.http.ParseException;
 import java.awt.Cursor;
-import java.awt.event.ComponentEvent;
-import java.awt.geom.RoundRectangle2D;
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
@@ -44,6 +41,8 @@ import java.util.Objects;
 
 
 public class MainUI {
+
+    //Establishes the connection between the form for the MainUI and its contents, so things can be altered, and actions can be executed.
     private JButton HappyButton;
     private JButton ExcitedButton;
     private JButton MotivatedButton;
@@ -84,13 +83,14 @@ public class MainUI {
     private JButton FastForward;
     private JPanel DP;
     private JPanel TP;
-
     private JFrame frame;
 
+    //Returns the JFrame frame, so it can be used by all parts in this class.
     public JFrame getFrame() {
         return frame;
     }
 
+    //Establishes a connection with the Moodify database.
     public static Connection dbConnector()
     {
         try {
@@ -102,6 +102,8 @@ public class MainUI {
             return null;
         }
     }
+
+    //Gets the user id from the database.
     public static String GGID(){
         Connection conn = null;
         String query = "SELECT * from Uinfo";
@@ -112,7 +114,6 @@ public class MainUI {
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
                 GID = rs.getString(1);
-                System.out.println(GID);
             }
             return GID;
         }
@@ -121,18 +122,12 @@ public class MainUI {
         }
         return GGID();
     }
-    private static final String userId = GGID();
-    //UID "2o6dxgdhlsl9wdmtahmuy3vm6"
-    //private static final String userId = "gwq66wps2n6f7ed2mw0rsk7v3";
 
-    /*
-    Access token retrieved from the AuthorizationCodeRefresh Class
-    Failed Attempt to implement seamless fetching
-    */
-    // private static final String accessToken = "BQC0b9ywzKxY1-CFyTaH0toG57ak66Q5bqc3_n5Lc3Em4eVoZlpqB-c-RPsmqsz9EtHiGP5eQm2TVj92a3itvQhF_K5lhcPOxO2MTCn2xNdlGnTlooP414X-X94-OD-KjzrYNo9gPKckwZOSb1RDF5azBWjiLQZSsc0QxUgBvw91z7JqMAjAbbcIU6LStwrTephTYbAsXPa4GCPTFTIOKjbSrn5C6jvJXx3RlCjf4cdbxGFCTdyJ4VE7uXXKSgPEa_VNtV1MZ20zA6aZQoJWURHsdyIl2Swp0N919paVanDrI_pRnQhMYStf_KGrZit5eTEB1U2qixEJw18";
+    //Retrieves the refresh token needed to make requests to the Spotify API.
+    private static final String userId = GGID();
     private static final String accessToken = AuthorizationCodeRefresh.authorizationCodeRefresh_Sync();
 
-    //Specifies what can be retrieved from Spotify by adding the API request inside a variable
+    //Specifies what can be retrieved from Spotify by adding the API request inside a variable.
     private static final ModelObjectType Artist = ModelObjectType.ARTIST;
     private static final ModelObjectType Album = ModelObjectType.ALBUM;
     private static final ModelObjectType AudioFeatures = ModelObjectType.AUDIO_FEATURES;
@@ -146,28 +141,12 @@ public class MainUI {
             .setAccessToken(accessToken)
             .build();
 
-    //Sets the request to a user's saved tracks
-
-    private static final GetUsersSavedTracksRequest getUsersSavedTracksRequest = spotifyApi.getUsersSavedTracks()
-            .build();
-
-    //Sets the request to a user's followed artists
-    private static final GetUsersFollowedArtistsRequest getUsersFollowedArtistsRequest = spotifyApi
-            .getUsersFollowedArtists(Artist)
-            .build();
-
-    //Sets the request to a user's playlists
-    private static final GetListOfUsersPlaylistsRequest getListOfUsersPlaylistsRequest = spotifyApi
-            .getListOfUsersPlaylists(userId)
-            //        .limit(0)
-            .offset(0)
-            .build();
-
+    //Prepares the request to get the users top tracks, which will be processed for playback, amongst other things.
     private static final GetUsersTopTracksRequest getUsersTopTracksRequest = spotifyApi.getUsersTopTracks()
             .limit(10)
-//          .offset(0)
             .time_range("long_term")
             .build();
+    //Prepares the request to get the users available devices, to be used for playback, and altering playback status.
     private static final GetUsersAvailableDevicesRequest getUsersAvailableDevicesRequest = spotifyApi
             .getUsersAvailableDevices()
             .build();
@@ -237,10 +216,6 @@ public class MainUI {
                     boolean Shuffle = currentlyPlayingContext.getShuffle_state();
                     String Repeat =  currentlyPlayingContext.getRepeat_state();
 
-                    System.out.println(Shuffle);
-                    System.out.println(Playing);
-                    System.out.println(Repeat);
-
                     if (Shuffle == true){
                         Option6Button.setIcon(ShuffleOn);
                     } else{
@@ -267,22 +242,16 @@ public class MainUI {
                                 .build();
                         final Track track = getTrackRequest.execute();
 
-                        System.out.println("Track Name: " + track.getName());
                         CSongNameLBL.setText(track.getName());
-                        System.out.println("Album: " + track.getAlbum().getName());
                         CAlbumNameLBL.setText(track.getAlbum().getName());
                         for (ArtistSimplified artist : track.getArtists()) {
-                            System.out.println("Artist: " + artist.getName());
                             artist.getName();
                             CArtistNameLBL.setText(artist.getName());
                             break;
                         }
-                        System.out.println("Artist: " + track.getArtists());
-                        System.out.println("Image: " + track.getAlbum().getImages());
 
                         se.michaelthelin.spotify.model_objects.specification.Image[] IURL = track.getAlbum().getImages();
                         String ImageURLBIG = String.valueOf(IURL[0].getUrl());
-                        System.out.println("Image: " + ImageURLBIG);
                         URL getImageUrl = new URL(ImageURLBIG);
                         BufferedImage ImageBuffer = ImageIO.read(getImageUrl);
                         Image ResizedAlbumCover = ImageBuffer.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
@@ -300,12 +269,6 @@ public class MainUI {
             throw new RuntimeException(e);
         }
 
-        Option1Button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                return;
-            }
-        });
 
         Option2Button.addActionListener(new ActionListener() {
             @Override
@@ -320,7 +283,6 @@ public class MainUI {
                 } catch (SpotifyWebApiException ex) {
                     throw new RuntimeException(ex);
                 }
-                //final JDialog dialog = new JDialog(frame, "Moodify", true);
                 recentPlaylist.getContentPane().add(recentPlaylist.RecentPlaylistPanel);
                 recentPlaylist.setModal(true);
                 recentPlaylist.pack();
@@ -331,7 +293,6 @@ public class MainUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 DatabaseUI modalDB = new DatabaseUI(frame, "Moodify", true);
-                //final JDialog dialog = new JDialog(frame, "Moodify", true);
                 modalDB.getContentPane().add(modalDB.DatabaseUIPanel);
                 modalDB.setModal(true);
                 modalDB.pack();
@@ -441,16 +402,11 @@ public class MainUI {
                 try {
                     devices = getUsersAvailableDevicesRequest.execute();
                     String DID = "";
-                    System.out.println("Length: " + devices.length);
-                    if (devices.length == 1) {
-                        System.out.println("Device ID: " + devices[0].getId());
+                    if (devices.length > 0) {
                         DID = devices[0].getId();
                     }
                     if (devices.length == 0) {
                         System.out.println("Please launch the Spotify App on your computer");
-                    }
-                    if (devices.length > 1) {
-                        System.out.println("Please close every other spotify app but your computer's");
                     }
                     final SkipUsersPlaybackToNextTrackRequest skipUsersPlaybackToNextTrackRequest = spotifyApi
                             .skipUsersPlaybackToNextTrack()
@@ -466,22 +422,16 @@ public class MainUI {
                             .build();
                     final Track track = getTrackRequest.execute();
 
-                    System.out.println("Track Name: " + track.getName());
                     CSongNameLBL.setText(track.getName());
-                    System.out.println("Album: " + track.getAlbum().getName());
                     CAlbumNameLBL.setText(track.getAlbum().getName());
                     for (ArtistSimplified artist : track.getArtists()) {
-                        System.out.println("Artist: " + artist.getName());
                         artist.getName();
                         CArtistNameLBL.setText(artist.getName());
                         break;
                     }
-                    System.out.println("Artist: " + track.getArtists());
-                    System.out.println("Image: " + track.getAlbum().getImages());
 
                     se.michaelthelin.spotify.model_objects.specification.Image[] IURL = track.getAlbum().getImages();
                     String ImageURLBIG = String.valueOf(IURL[0].getUrl());
-                    System.out.println("Image: " + ImageURLBIG);
                     URL getImageUrl = new URL(ImageURLBIG);
                     BufferedImage ImageBuffer = ImageIO.read(getImageUrl);
                     Image ResizedAlbumCover = ImageBuffer.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
@@ -507,9 +457,7 @@ public class MainUI {
                 try {
                     devices = getUsersAvailableDevicesRequest.execute();
                     String DID = "";
-                    System.out.println("Length: " + devices.length);
                     if (devices.length == 1) {
-                        System.out.println("Device ID: " + devices[0].getId());
                         DID = devices[0].getId();
                     }
                     if (devices.length == 0) {
@@ -532,22 +480,16 @@ public class MainUI {
                             .build();
                     final Track track = getTrackRequest.execute();
 
-                    System.out.println("Track Name: " + track.getName());
                     CSongNameLBL.setText(track.getName());
-                    System.out.println("Album: " + track.getAlbum().getName());
                     CAlbumNameLBL.setText(track.getAlbum().getName());
                     for (ArtistSimplified artist : track.getArtists()) {
-                        System.out.println("Artist: " + artist.getName());
                         artist.getName();
                         CArtistNameLBL.setText(artist.getName());
                         break;
                     }
-                    System.out.println("Artist: " + track.getArtists());
-                    System.out.println("Image: " + track.getAlbum().getImages());
 
                     se.michaelthelin.spotify.model_objects.specification.Image[] IURL = track.getAlbum().getImages();
                     String ImageURLBIG = String.valueOf(IURL[0].getUrl());
-                    System.out.println("Image: " + ImageURLBIG);
                     URL getImageUrl = new URL(ImageURLBIG);
                     BufferedImage ImageBuffer = ImageIO.read(getImageUrl);
                     Image ResizedAlbumCover = ImageBuffer.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
@@ -572,9 +514,7 @@ public class MainUI {
                 try {
                     devices = getUsersAvailableDevicesRequest.execute();
                     String DID = "";
-                    System.out.println("Length: " + devices.length);
                     if (devices.length == 1) {
-                        System.out.println("Device ID: " + devices[0].getId());
                         DID = devices[0].getId();
                     }
                     if (devices.length == 0) {
@@ -630,12 +570,6 @@ public class MainUI {
                     PlaybackPanel.setBackground(new Color(92, 82, 63));
                     MoodifyLogoLabel.setForeground(new Color(225, 220, 210));
                     OptionsPanel.setBackground(new Color(92, 82, 63));
-            }
-        });
-        Option1Button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
             }
         });
 
@@ -704,7 +638,6 @@ public class MainUI {
                     final CurrentlyPlayingContext currentlyPlayingContext = getInformationAboutUsersCurrentPlaybackRequest.execute();
 
                     boolean Shuffle = currentlyPlayingContext.getShuffle_state();
-                    System.out.println(Shuffle);
 
                     final ToggleShuffleForUsersPlaybackRequest toggleShuffleForUsersPlaybackRequest;
 
@@ -722,7 +655,6 @@ public class MainUI {
                         toggleShuffleForUsersPlaybackRequest.execute();
                         Option6Button.setIcon(ShuffleOff);
                     }
-                    System.out.println(Shuffle);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 } catch (ParseException ex) {
@@ -742,7 +674,6 @@ public class MainUI {
                     final CurrentlyPlayingContext currentlyPlayingContext;
                     currentlyPlayingContext = getInformationAboutUsersCurrentPlaybackRequest.execute();
                     String Repeat = currentlyPlayingContext.getRepeat_state();
-                    System.out.println(Repeat);
 
                     if (Objects.equals(Repeat, "off")) {
                         final SetRepeatModeOnUsersPlaybackRequest setRepeatModeOnUsersPlaybackRequest = spotifyApi
@@ -777,6 +708,12 @@ public class MainUI {
 
             }
         });
+        Option1Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
     }
 
     private void getTrack(float MiE, float MaE, ImageIcon ExcitedGif) {
@@ -787,26 +724,19 @@ public class MainUI {
             final Device[] devices = getUsersAvailableDevicesRequest.execute();
 
             String DID = "";
-            System.out.println("Length: " + devices.length);
             if (devices.length == 0) {
                 System.out.println("Please launch the Spotify App on your computer");
             } else {
-                System.out.println("Device ID: " + devices[0].getId());
                 DID = devices[0].getId();
             }
 
 
             final Paging<se.michaelthelin.spotify.model_objects.specification.Track> trackPaging = getUsersTopTracksRequest.execute();
 
-            System.out.println("Total: " + trackPaging.getTotal());
-
             final Paging<se.michaelthelin.spotify.model_objects.specification.Track> Tracklist = getUsersTopTracksRequest.execute();
 
             ArrayList<String> TLAR = new ArrayList<String>();
             for (se.michaelthelin.spotify.model_objects.specification.Track List : Tracklist.getItems()) {
-                System.out.println("Name: " + List.getName());
-                System.out.println("ID: " + List.getId());
-                System.out.println("Uri: " + List.getUri());
                 TLAR.add(List.getId());
             }
 
@@ -833,12 +763,6 @@ public class MainUI {
             final Recommendations recommendations = getRecommendationsRequest.execute();
 
             for (TrackSimplified SpotifyRecommendations : recommendations.getTracks()) {
-                System.out.println("-------------------------------------------------------------------------------------");
-                System.out.println("Recommendations:");
-                //------------------------------------------------------------------------------------------------------
-                System.out.println("Recommended Track Name: " + SpotifyRecommendations.getName());
-                System.out.println("Recommended Track ID: " + SpotifyRecommendations.getId());
-                System.out.println("Recommended Track Uri: " + SpotifyRecommendations.getUri());
                 final AddItemToUsersPlaybackQueueRequest addItemToUsersPlaybackQueueRequest = spotifyApi
                         .addItemToUsersPlaybackQueue(SpotifyRecommendations.getUri())
                         .device_id(DID)
@@ -846,8 +770,6 @@ public class MainUI {
                 addItemToUsersPlaybackQueueRequest.execute();
             }
 
-
-            System.out.println("-------------------------------------------------------------------------------------");
             final SkipUsersPlaybackToNextTrackRequest skipUsersPlaybackToNextTrackRequest = spotifyApi
                     .skipUsersPlaybackToNextTrack()
                     .device_id(DID)
@@ -862,22 +784,16 @@ public class MainUI {
                     .build();
             final Track track = getTrackRequest.execute();
 
-            System.out.println("Track Name: " + track.getName());
             CSongNameLBL.setText(track.getName());
-            System.out.println("Album: " + track.getAlbum().getName());
             CAlbumNameLBL.setText(track.getAlbum().getName());
             for (ArtistSimplified artist : track.getArtists()) {
-                System.out.println("Artist: " + artist.getName());
                 artist.getName();
                 CArtistNameLBL.setText(artist.getName());
                 break;
             }
-            System.out.println("Artist: " + track.getArtists());
-            System.out.println("Image: " + track.getAlbum().getImages());
 
             se.michaelthelin.spotify.model_objects.specification.Image[] IURL = track.getAlbum().getImages();
             String ImageURLBIG = String.valueOf(IURL[0].getUrl());
-            System.out.println("Image: " + ImageURLBIG);
             URL getImageUrl = new URL(ImageURLBIG);
             BufferedImage ImageBuffer = ImageIO.read(getImageUrl);
             Image ResizedAlbumCover = ImageBuffer.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
@@ -892,7 +808,6 @@ public class MainUI {
 
 
     public static void main(String[] args) {
-
         final Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
         final URL imageResource = StageOne.class.getClassLoader().getResource("Images/Logo.png");
         final Image image = defaultToolkit.getImage(imageResource);

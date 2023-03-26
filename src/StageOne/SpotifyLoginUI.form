@@ -51,6 +51,7 @@
                 </constraints>
                 <properties>
                   <background color="-4674410"/>
+                  <caretColor color="-921103"/>
                   <font name="Felix Titling" size="24"/>
                   <foreground color="-65794"/>
                   <inheritsPopupMenu value="false"/>
@@ -89,6 +90,8 @@
                 </constraints>
                 <properties>
                   <background color="-4674410"/>
+                  <caretColor color="-921157"/>
+                  <disabledTextColor color="-921103"/>
                   <font name="Felix Titling" size="24"/>
                   <margin top="0" left="0" bottom="0" right="0"/>
                 </properties>

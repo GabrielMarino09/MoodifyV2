@@ -19,7 +19,9 @@
         </constraints>
         <properties>
           <background color="-1975086"/>
-          <maximumSize width="1762" height="1036"/>
+          <maximumSize width="-1" height="-1"/>
+          <minimumSize width="1950" height="1100"/>
+          <preferredSize width="1950" height="1100"/>
         </properties>
         <border type="none"/>
         <children>

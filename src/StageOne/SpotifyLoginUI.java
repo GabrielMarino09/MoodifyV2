@@ -89,12 +89,15 @@ public class SpotifyLoginUI {
                     pst.execute();
                     pst.setString(3, AuthorizationCode.authorizationCode_Sync());
                     pst.execute();
+                    Thread.sleep(5000);
                     frame.dispose();
                     Fetch.Fetch();
 
                 } catch (ClassNotFoundException ex) {
                     throw new RuntimeException(ex);
                 } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (InterruptedException ex) {
                     throw new RuntimeException(ex);
                 }
             }

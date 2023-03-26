@@ -48,22 +48,12 @@ public class DatabaseUI extends JDialog {
             int a = 0;
             while (rs.next()) {
 
-                System.out.print(a++);
-                System.out.println(" " + rs.getString(1));
                 String[] dataRow = new String[NUM_COLS];
                 dataRow[0] = rs.getString(10);
                 dataRow[1] = rs.getString(9);
                 dataRow[2] = rs.getString(1);
                 dataRow[3] = rs.getString(8);
                 table.add(dataRow);
-            }
-            for (String[] mydata : table) {
-                System.out.println("--");
-                System.out.print(mydata[0]);
-                System.out.print(" | " + mydata[1]);
-                System.out.print(" | " + mydata[2]);
-                System.out.print(" | " + mydata[3]);
-                System.out.println("");
             }
 
             String[][] fullTable = new String[table.size()][NUM_COLS];
@@ -93,14 +83,8 @@ public class DatabaseUI extends JDialog {
 
 
     private void createTable(JFrame frame) {
-
-        // adding it to JScrollPane
         sp = new JScrollPane(Table01);
         frame.add(sp);
-        // Frame Size
-        //Table01.setSize(500, 200);
-        // Frame Visible = true
-        //DatabaseUIPanel.setVisible(true);
     }
 
 
@@ -121,7 +105,6 @@ public class DatabaseUI extends JDialog {
         BackButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Back button pressed");
                 dispose();
             }
         });

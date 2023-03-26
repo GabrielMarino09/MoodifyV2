@@ -49,7 +49,6 @@ public class AuthorizationCode extends AuthorizationCodeUri {
             //Gets both Access Token and Refresh Token from Spotify
             spotifyApi.setRefreshToken(authorizationCodeCredentials.getRefreshToken());
             TR = authorizationCodeCredentials.getRefreshToken();
-            System.out.println("Refresh Token: " + authorizationCodeCredentials.getRefreshToken());
         } catch (IOException | SpotifyWebApiException | ParseException e) {
             System.out.println("Error on AC: " + e.getMessage());
         }
