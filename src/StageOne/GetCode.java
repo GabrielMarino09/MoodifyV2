@@ -1,11 +1,12 @@
+//GetCode a part of the package named StageOne.
 package StageOne;
 
-import javax.swing.*;
-import java.awt.*;
+//Imports the necessary libraries to execute this class.
 import java.sql.*;
 
 public class GetCode {
 
+    // Establishes the connection with the Moodify Database.
     public static Connection dbConnector() {
         try {
             Class.forName("org.sqlite.JDBC");
@@ -17,6 +18,7 @@ public class GetCode {
         }
     }
 
+    // Method to get the Code from the database. This is used by other classes.
     public static String GCode(){
         Connection conn = null;
         String query = "SELECT * from Uinfo";
@@ -35,6 +37,8 @@ public class GetCode {
         }
         return GCode();
     }
+
+    // Method to get the Refresh Token from the database. This is used by other classes.
     public static String RT(){
         Connection conn = null;
         String query = "SELECT * from Uinfo";
@@ -54,9 +58,11 @@ public class GetCode {
         return RT();
     }
 
-
     public static void main(String[] args) {
+        // When executed, it first it gets the Access Code
         GCode();
+
+        // Then, it gets the Refresh Token
         RT();
     }
 }

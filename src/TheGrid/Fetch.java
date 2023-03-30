@@ -1,41 +1,35 @@
-//Nests Authorization code inside TheGrid
+//Nests Fetch code inside TheGrid
 package TheGrid;
 
-//Imports all the necessary libraries from the Spotify API developed by Michael Thelin
+//Imports the other classes.
 
+import StageOne.MainUI;
 import StageOne.StageOne;
 import authorization.PKCE.PKCE.AuthorizationCodeRefresh;
-import StageOne.MainUI;
-import java.awt.*;
-import java.awt.Image;
-import java.net.URL;
-import java.sql.*;
-import javax.swing.*;
 import org.apache.hc.core5.http.ParseException;
 import se.michaelthelin.spotify.SpotifyApi;
 import se.michaelthelin.spotify.enums.ModelObjectType;
 import se.michaelthelin.spotify.exceptions.SpotifyWebApiException;
-import se.michaelthelin.spotify.model_objects.credentials.AuthorizationCodeCredentials;
 import se.michaelthelin.spotify.model_objects.miscellaneous.AudioAnalysis;
 import se.michaelthelin.spotify.model_objects.specification.*;
-import se.michaelthelin.spotify.requests.authorization.authorization_code.AuthorizationCodeRefreshRequest;
 import se.michaelthelin.spotify.requests.data.browse.GetRecommendationsRequest;
-import se.michaelthelin.spotify.requests.data.browse.miscellaneous.GetAvailableGenreSeedsRequest;
 import se.michaelthelin.spotify.requests.data.follow.GetUsersFollowedArtistsRequest;
-import se.michaelthelin.spotify.requests.data.library.CheckUsersSavedTracksRequest;
 import se.michaelthelin.spotify.requests.data.library.GetUsersSavedTracksRequest;
 import se.michaelthelin.spotify.requests.data.playlists.GetListOfUsersPlaylistsRequest;
 import se.michaelthelin.spotify.requests.data.tracks.GetAudioAnalysisForTrackRequest;
 import se.michaelthelin.spotify.requests.data.tracks.GetAudioFeaturesForTrackRequest;
 
-
+import javax.swing.*;
+import java.awt.Image;
+import java.awt.*;
 import java.io.IOException;
+import java.net.URL;
+import java.sql.*;
 import java.util.ArrayList;
-
-
 
 public class Fetch {
 
+    // Establishes connection with the Moodify database.
     public static Connection dbConnector()
     {
         try {
@@ -47,6 +41,8 @@ public class Fetch {
             return null;
         }
     }
+
+    // Gets the user ID from the database.
     public static String GGID(){
         Connection conn = null;
         String query = "SELECT * from Uinfo";
@@ -66,29 +62,18 @@ public class Fetch {
         }
         return GGID();
     }
+
+    // Deletes all records of the database and uses the vacuum function to delete null cells.
     private static ArrayList<String[]> getData(){
         ArrayList<String[]> table = new ArrayList<>();
         Connection conn = null;
-        String query = "SELECT * from TrackInfo";
         String deleteQuery = "DELETE FROM TrackInfo";
         String VAC = "VACUUM";
-        /* Maybe...
-        String StartQuery = "CREATE TABLE TrackInfo (" +
-                "TrackName TEXT," +
-                "Artist TEXT," +
-                "Explicit TEXT," +
-                "TrackID TEXT," +
-                "RecommendedTrack TEXT," +
-                "RecommendedArtist TEXT," +
-                "RecommendedURL TEXT," +
-                "Mood TEXT)";
-         */
         try{
             conn = dbConnector();
             Statement stmt = conn.createStatement();
             stmt.executeQuery(deleteQuery);
             stmt.executeQuery(VAC);
-            //stmt.executeQuery(StartQuery);
 
         } catch (SQLException sqle){
             sqle.printStackTrace();
@@ -99,23 +84,19 @@ public class Fetch {
         return table;
     }
 
+    // Closes the connection with the database.
     public static void closeConnection(Connection conn){
         try{
             conn.close();
-
-        } catch(SQLException e){
+        }
+        catch(SQLException e){
             e.printStackTrace();
         }
     }
 
-    //UserID present at the User's profile page
+    // Gets the user ID from the database.
     private static final String userId = GGID();
-    //private static final String userId = "gwq66wps2n6f7ed2mw0rsk7v3";
-    /*
-    Access token retrieved from the AuthorizationCodeRefresh Class
-    Failed Attempt to implement seamless fetching
-    */
-    // private static final String accessToken = "BQC0b9ywzKxY1-CFyTaH0toG57ak66Q5bqc3_n5Lc3Em4eVoZlpqB-c-RPsmqsz9EtHiGP5eQm2TVj92a3itvQhF_K5lhcPOxO2MTCn2xNdlGnTlooP414X-X94-OD-KjzrYNo9gPKckwZOSb1RDF5azBWjiLQZSsc0QxUgBvw91z7JqMAjAbbcIU6LStwrTephTYbAsXPa4GCPTFTIOKjbSrn5C6jvJXx3RlCjf4cdbxGFCTdyJ4VE7uXXKSgPEa_VNtV1MZ20zA6aZQoJWURHsdyIl2Swp0N919paVanDrI_pRnQhMYStf_KGrZit5eTEB1U2qixEJw18";
+
     private static final String accessToken = AuthorizationCodeRefresh.authorizationCodeRefresh_Sync();
 
     //Specifies what can be retrieved from Spotify by adding the API request inside a variable
@@ -145,22 +126,8 @@ public class Fetch {
     //Sets the request to a user's playlists
     private static final GetListOfUsersPlaylistsRequest getListOfUsersPlaylistsRequest = spotifyApi
             .getListOfUsersPlaylists(userId)
-            //        .limit(0)
             .offset(0)
             .build();
-
-
-//  private static final GetRecommendationsRequest getRecommendationsRequest = spotifyApi.getRecommendations()
-//          .limit(10)
-//          .market(CountryCode.SE)
-//          .max_popularity(50)
-//          .min_popularity(10)
-//          .seed_artists("0LcJLqbBmaGUft1e9Mm8HV")
-//          .seed_genres("electro")
-//          .seed_tracks("01iyCAUm8EvOFqVWYJ3dVX")
-//          .target_popularity(20)
-//          .build();
-
 
     //Initializes Fetch class
     public static void Fetch() {
@@ -228,9 +195,6 @@ public class Fetch {
                         .getAudioAnalysisForTrack(ID)
                         .build();
                 final AudioAnalysis audioAnalysis = getAudioAnalysisForTrackRequest.execute();
-
-                final GetAvailableGenreSeedsRequest getAvailableGenreSeedsRequest = spotifyApi.getAvailableGenreSeeds()
-                        .build();
 
                 String ArtistID = null;
                 ArrayList<String> Artists = new ArrayList<String>();
